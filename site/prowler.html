@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prowler — Diana Tiart</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Prowler — Diana Tiart">
+  <meta property="og:description" content="Prowler: designing the MVP of a paid SaaS version of an open-source cloud security tool. A product design case study on findings, dashboards, service status and compliance.">
+  <meta name="description" content="Prowler: designing the MVP of a paid SaaS version of an open-source cloud security tool. A product design case study on findings, dashboards, service status and compliance.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css?v=198">
+</head>
+<body class="case-split theme-prowler">
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav-wrap">
+    <nav class="pill-nav">
+      <a href="index.html" class="pill-nav__item">
+        <span class="pill-nav__icon" aria-hidden="true"><img class="pill-nav__icon-img" src="assets/menu-star.png?v=2" alt="" width="24" height="24"></span>
+        <span class="pill-nav__label"><span class="pill-nav__label-inner">Home</span><span class="pill-nav__label-inner" aria-hidden="true">Home</span></span>
+      </a>
+      <a href="work.html" class="pill-nav__item is-active">
+        <span class="pill-nav__icon" aria-hidden="true"><img class="pill-nav__icon-img" src="assets/menu-star.png?v=2" alt="" width="24" height="24"></span>
+        <span class="pill-nav__label"><span class="pill-nav__label-inner">Work</span><span class="pill-nav__label-inner" aria-hidden="true">Work</span></span>
+      </a>
+      <a href="about.html" class="pill-nav__item">
+        <span class="pill-nav__icon" aria-hidden="true"><img class="pill-nav__icon-img" src="assets/menu-star.png?v=2" alt="" width="24" height="24"></span>
+        <span class="pill-nav__label"><span class="pill-nav__label-inner">About</span><span class="pill-nav__label-inner" aria-hidden="true">About</span></span>
+      </a>
+      <a href="contact.html" class="pill-nav__item">
+        <span class="pill-nav__icon" aria-hidden="true"><img class="pill-nav__icon-img" src="assets/menu-star.png?v=2" alt="" width="24" height="24"></span>
+        <span class="pill-nav__label"><span class="pill-nav__label-inner">Contact</span><span class="pill-nav__label-inner" aria-hidden="true">Contact</span></span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="case-page case-page--split">
+
+      <div class="split">
+        <aside class="split__side rise-group is-page-hero">
+          <a class="case-crumb rise" style="--d:80ms" href="work.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Other case studies
+          </a>
+          <h1 class="split__title rise" style="--d:140ms">Prowler</h1>
+          <p class="split__role rise" style="--d:180ms">Product designer at DockYard</p>
+          <p class="split__desc rise" style="--d:220ms">Prowler is an open-source cloud security tool. Its team hired DockYard to design the MVP of a paid SaaS version. I worked on it alongside the lead designer.</p>
+          <div class="split__tags rise" style="--d:260ms">
+            <span class="split__tag split__tag--1">Product Design</span>
+            <span class="split__tag split__tag--2">Data Visualization</span>
+            <span class="split__tag split__tag--3">SaaS MVP</span>
+            <span class="split__tag split__tag--4">Agency work</span>
+          </div>
+          <dl class="split__meta rise" style="--d:300ms">
+            <div><dt>My role</dt><dd>Product designer, working with the lead designer. I took part in user interviews and designed the findings list, overview dashboard, services and compliance views.</dd></div>
+            <div><dt>Client</dt><dd>Prowler, open-source cloud security</dd></div>
+            <div><dt>Agency</dt><dd>DockYard</dd></div>
+          </dl>
+        </aside>
+
+        <div class="split__main">
+        <div class="rise-group is-page-hero">
+          <div class="case-media case-media--image case-media--wide rise" style="--d:200ms">
+            <img src="assets/prowler-hero.webp?v=1" alt="Prowler scan overview: findings by status and severity, attack surface, findings over time and new findings" width="1201" height="780">
+          </div>
+        </div>
+
+        <div class="case-section rise-group" id="challenge">
+          <span class="case-section__eyebrow rise" style="--d:60ms">The Challenge</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">A free tool that had to become a paid product</h2>
+          <p class="rise" style="--d:130ms">DevOps teams already knew and trusted Prowler. The company wanted to grow into a paid SaaS, but its two existing interfaces didn't show enough value to make anyone pay.</p>
+          <div class="case-goal case-goal--problem rise" style="--d:150ms">
+            <span class="case-goal__label">Problem</span>
+            <p class="case-goal__text">Scan results were hard to read, and nothing in the product showed why it was worth paying for.</p>
+          </div>
+          <div class="case-findings rise" style="--d:190ms">
+            <div class="case-finding">
+              <span class="case-finding__index">01</span>
+              <p><strong>Two disconnected interfaces.</strong> An outdated internal UI, and a quick Grafana integration that pushed users out of Prowler.</p>
+            </div>
+            <div class="case-finding">
+              <span class="case-finding__index">02</span>
+              <p><strong>Hard-to-read data.</strong> Large tables you had to scroll sideways, and scan results shown as plain text with no history.</p>
+            </div>
+            <div class="case-finding">
+              <span class="case-finding__index">03</span>
+              <p><strong>No visible value.</strong> A new user couldn't see what the product did for them, so it was hard to turn leads into customers.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-section rise-group" id="research">
+          <span class="case-section__eyebrow rise" style="--d:60ms">Research</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">Learning how a security scan works</h2>
+          <p class="rise" style="--d:140ms">I took part in interviews with DevOps engineers and security users. Before designing anything we had to learn the vocabulary and how Prowler's data fits together:</p>
+          <div class="case-findings rise" style="--d:180ms">
+            <div class="case-finding">
+              <span class="case-finding__index">01</span>
+              <p><strong>A scan runs checks.</strong> Prowler goes through a cloud account and tests it against hundreds of checks, like "is this storage bucket public?" or "is two-factor login on?"</p>
+            </div>
+            <div class="case-finding">
+              <span class="case-finding__index">02</span>
+              <p><strong>Every result is a finding.</strong> It passes or fails, and carries a severity (critical to low), a service, a region and an account.</p>
+            </div>
+            <div class="case-finding">
+              <span class="case-finding__index">03</span>
+              <p><strong>Checks add up to compliance.</strong> Standards like SOC 2, PCI-DSS or GDPR are sets of checks, so a compliance score is the share of those checks that pass.</p>
+            </div>
+          </div>
+          <div class="case-goal case-goal--finding rise" style="--d:220ms">
+            <span class="case-goal__label">What it meant for design</span>
+            <p class="case-goal__text">Engineers need to know what to fix first. Auditors and compliance officers need to know how close the company is to a standard. One product had to answer both questions.</p>
+          </div>
+        </div>
+
+        <div class="case-feature case-section rise-group" id="findings">
+          <span class="case-section__eyebrow rise" style="--d:60ms">The Solution · 01 Findings</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">One row per finding, details on demand</h2>
+          <p class="rise" style="--d:140ms">I designed the findings list. The old table was wide and had to be scrolled sideways. In the new one each finding is a row that collapses to the key facts: enough to decide whether it matters.</p>
+          <p class="rise" style="--d:160ms">Opening a row shows the affected resources, an explanation of the risk and remediation steps the user can copy as code. Searchable tags help people find a finding fast. We also left room in the layout for future integrations, such as sending a finding to Jira or Slack.</p>
+          <div class="case-goal case-goal--finding rise" style="--d:200ms">
+            <span class="case-goal__label">Decision</span>
+            <p class="case-goal__text">Collapsed rows answer "does this matter?". Expanded rows answer "how do I fix it?".</p>
+          </div>
+          <div class="case-media case-media--image rise" style="--d:220ms">
+            <img src="assets/prowler-findings.webp?v=1" alt="Findings list with one finding expanded: risk, recommendation, reference commands and tags" width="1812" height="1675" loading="lazy">
+          </div>
+        </div>
+
+        <div class="case-feature case-section rise-group" id="dashboard">
+          <span class="case-section__eyebrow rise" style="--d:60ms">02 Overview Dashboard</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">From a text list to a picture of risk</h2>
+          <p class="rise" style="--d:140ms">The old overview listed scan results as text, with no context and no history. I designed a dashboard where every chart leads somewhere:</p>
+          <ul class="case-bullets rise" style="--d:180ms">
+            <li>A pass/fail chart and a bar chart of failed findings by severity. Click either and you land on a findings list filtered to that slice.</li>
+            <li>A list of new findings sorted by severity, with a link to see them all.</li>
+            <li>A Findings Over Time graph, with tooltips on each point, to show whether things are getting better or worse.</li>
+            <li>A map of failed findings by service and region.</li>
+            <li>Badges that tell new findings apart from ones that were already there.</li>
+          </ul>
+          <div class="case-media case-media--image rise" style="--d:220ms">
+            <img src="assets/prowler-overview.webp?v=1" alt="Overview dashboard: findings by status and severity, attack surface, findings over time, findings by region, failed findings by account and by service" width="1201" height="1874" loading="lazy">
+          </div>
+        </div>
+
+        <div class="case-feature case-section rise-group" id="services">
+          <span class="case-section__eyebrow rise" style="--d:60ms">03 Services</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">Which services need attention</h2>
+          <p class="rise" style="--d:140ms">I designed a services view with a card for each cloud service. A service with failed findings turns red, and one click opens the findings for that service. It's the shortest path from "something is wrong somewhere" to "here it is".</p>
+          <div class="case-media case-media--image rise" style="--d:220ms">
+            <img src="assets/prowler-services.webp?v=1" alt="Services view: a card for every cloud service, red for services with failed checks" width="1812" height="944" loading="lazy">
+          </div>
+        </div>
+
+        <div class="case-feature case-section rise-group" id="compliance">
+          <span class="case-section__eyebrow rise" style="--d:60ms">04 Compliance</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">How close are we to the standard</h2>
+          <p class="rise" style="--d:140ms">For compliance I designed a card per framework with a progress bar showing the share of passing checks, color-coded so weak spots stand out. This view matters most to regulated businesses and governments, who work against these frameworks every day.</p>
+          <div class="case-media case-media--image rise" style="--d:220ms">
+            <img src="assets/prowler-compliance.webp?v=1" alt="Compliance view: a progress card per framework with the share of passing checks" width="1812" height="944" loading="lazy">
+          </div>
+        </div>
+
+        <div class="case-section rise-group" id="outcome">
+          <span class="case-section__eyebrow rise" style="--d:60ms">Outcome</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">What happened for the client</h2>
+          <p class="rise" style="--d:140ms">After launch, Prowler closed its first large SaaS deal with a sports merchandising company with more than $3 billion in annual revenue. Multinational cloud companies showed interest, and Prowler raised another round of funding.</p>
+          <p class="rise" style="--d:180ms">These are the client's results, and the work of a whole team. I was one designer on it, working next to the lead. <a href="https://dockyard.com/work/case-studies/prowler" target="_blank" rel="noopener">DockYard's own write-up of the project</a> has more.</p>
+        </div>
+
+        <div class="case-footer rise-group">
+          <a class="case-footer__next case-footer__next--back rise" style="--d:60ms" href="work.html">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Back to all work
+          </a>
+        </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js?v=22"></script>
+</body>
+</html>

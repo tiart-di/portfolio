@@ -1,0 +1,3504 @@
+/* ============================================================
+   Diana Tiart — Portfolio
+   Tokens pulled directly from her Figma file
+   (figma.com/design/FyNgH7BnIw7esJynIFmMux — node 37:2147, 44:565)
+   Fonts: Red Hat Display everywhere (content + nav)
+   ============================================================ */
+
+:root {
+  --color-bg: #FFFFFF;
+  --color-text: #1E1E1E;
+  --color-text-black: #000000;
+  --color-muted: #808080;
+  --color-desc: #747474;
+  --color-tile: #F7F7F9;
+  --color-tile-hover: #EFEFF3;
+  --color-media: #F2F1F0; /* work-card image/placeholder slot, from Figma */
+  --color-accent-1: #F1567F; /* coral, gradient */
+  --color-accent-2: #FCC178; /* peach, gradient */
+  --color-sparkle: #993540;  /* from Diana's real star-menu.svg export */
+
+  --radius-pill: 999px;
+  --radius-tile: 32px;
+  --radius-avatar: 8px;
+
+  --ease: cubic-bezier(.22, 1, .36, 1);
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+
+  --side-padding: clamp(24px, 6vw, 96px);
+  --content-width: 1360px;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+.muted { color: var(--color-muted); }
+
+/* ---------- grain overlay ---------- */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- nav ---------- */
+.nav-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-3) var(--side-padding) 0;
+  /* Opaque-ish backdrop so page content scrolling underneath the fixed nav
+     doesn't visually bleed into the nav labels (Diana caught this on the
+     case-study page, where the meta row scrolls right up under it) — a
+     transparent fixed nav only "worked" before because whatever scrolled
+     under it always had its own solid tile background. */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.pill-nav {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+}
+
+.pill-nav__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.pill-nav__icon {
+  display: none;
+  flex-shrink: 0;
+}
+
+.pill-nav__icon-img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.pill-nav__item.is-active .pill-nav__icon {
+  display: inline-flex;
+}
+
+/* label "scroll up" hover — two stacked copies of the text, the whole
+   stack shifts up by one line so the top copy leaves as the duplicate
+   underneath it scrolls into its place */
+.pill-nav__label {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 1.2em;
+  line-height: 1.2em;
+}
+
+.pill-nav__label-inner {
+  display: block;
+  transition: transform 420ms var(--ease);
+}
+
+.pill-nav__label-inner:last-child {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.pill-nav__item:hover .pill-nav__label-inner {
+  transform: translateY(-100%);
+}
+
+/* ---------- hero section ---------- */
+.hero {
+  position: relative;
+  padding: 112px var(--side-padding) 24px;
+}
+
+.hero-row {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  align-items: stretch;
+}
+
+/* generic tile ---------------------------------------------------- */
+.tile {
+  position: relative;
+  border-radius: var(--radius-tile);
+  background: var(--color-tile);
+  overflow: hidden;
+}
+
+.tile__title {
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+}
+
+.tile__arrow {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  transition: transform 520ms var(--ease), background 520ms var(--ease);
+}
+
+.tile__arrow--solid {
+  background: var(--color-text);
+  color: #fff;
+}
+
+.tile__arrow--outline {
+  background: transparent;
+  color: var(--color-text);
+  border: 1.5px solid var(--color-text);
+  backdrop-filter: blur(8px);
+}
+
+.tile__arrow--muted {
+  background: var(--color-tile-hover);
+  color: var(--color-muted);
+}
+
+.tile:hover .tile__arrow {
+  transform: translate(3px, -3px);
+}
+
+/* left — photo tile + identity card, stacked ----------------------- */
+.hero-left {
+  width: 672px;
+  /* fills whatever vertical space is left below the nav+gap (112px) and
+     above the hero's own bottom padding (24px) — so it always fits the
+     viewport instead of a hardcoded guess */
+  height: calc(100svh - 112px - 24px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.tile--hero-photo {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.hero-photo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-photo-caption {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 8px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(30, 30, 30, 0.14);
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.hero-photo-caption__avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.tile--hero-text {
+  flex: 0 0 auto;
+  min-height: 176px;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.hero__heading {
+  margin: 0 0 var(--space-3);
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+  white-space: nowrap;
+}
+
+.hero__sub {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.4;
+  color: var(--color-text);
+  text-wrap: pretty;
+}
+
+/* right column ------------------------------------------------------ */
+.hero-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  /* match .tile--hero's height exactly (not just grid-stretch) so this
+     column can never push the section taller than one screen — if content
+     needs more room than this, .tile--work below shrinks to absorb it
+     instead of the whole page growing past 100svh. */
+  height: calc(100svh - 112px - 24px);
+}
+
+.tile--about {
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+  /* min-height, not height: 254px was clipping the chips row on real
+     fonts (Red Hat Display's actual metrics run taller than my
+     preview fallback) — overflow:hidden on .tile was silently
+     deleting content that didn't fit. min-height keeps 254px as the
+     floor but lets the card grow if content needs more room. */
+  min-height: 254px;
+  flex: 0 0 auto;
+  transition: transform 620ms var(--ease), background 620ms var(--ease);
+}
+
+.tile--about:hover { background: var(--color-tile-hover); }
+
+.about-head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.about-tagline-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.about-icon {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  flex-shrink: 0;
+  transition: transform 620ms var(--ease);
+}
+
+.tile--about:hover .about-icon {
+  transform: rotate(18deg) scale(1.1);
+}
+
+.about-tagline {
+  margin: 0;
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--color-desc);
+}
+
+.about-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.about-chip {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  border: 1px solid #E3E3E8;
+  box-shadow: 0 1px 2px rgba(30, 30, 30, 0.05);
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--color-text);
+  transition: transform 420ms var(--ease), box-shadow 420ms var(--ease);
+}
+
+/* staggered pop — each chip lifts a beat after the previous one */
+.tile--about:hover .about-chip {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(30, 30, 30, 0.1);
+}
+
+.tile--about:hover .about-chip:nth-child(1) { transition-delay: 0ms; }
+.tile--about:hover .about-chip:nth-child(2) { transition-delay: 40ms; }
+.tile--about:hover .about-chip:nth-child(3) { transition-delay: 80ms; }
+.tile--about:hover .about-chip:nth-child(4) { transition-delay: 120ms; }
+.tile--about:hover .about-chip:nth-child(5) { transition-delay: 160ms; }
+
+.work-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: var(--space-1);
+}
+
+.hero-col > .work-heading:first-child { margin-top: 0; }
+
+.work-heading__icon { display: inline-flex; }
+
+.work-heading__icon-img {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+.tile--work {
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* fill fill — stretches to the column's full width, and grows to
+     share any leftover vertical space with the other work card */
+  align-self: stretch;
+  flex: 1 1 auto;
+  /* allow shrinking below content size — the safety valve that keeps
+     .hero-col's fixed height from ever forcing the section to scroll */
+  min-height: 0;
+  transition: transform 620ms var(--ease), background 620ms var(--ease);
+}
+
+.tile--work:hover { background: var(--color-tile-hover); }
+
+.work-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* scoped to .tile--work so this wins over the later, same-specificity
+   .work-card__title rule used by the standalone work.html cards — the
+   two share a class name but are visually different components */
+.tile--work .work-card__title {
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.8px;
+  color: var(--color-text);
+}
+
+.work-card__desc {
+  margin: 0;
+  max-width: 274px;
+  font-size: clamp(1rem, 1.2vw, 1.24rem);
+  line-height: 1.35;
+  color: var(--color-desc);
+  text-wrap: pretty;
+}
+
+/* iOS App card — phone mockup bleeding off the top/bottom edge, cropped
+   by .tile's overflow:hidden (same trick as the reference shot) */
+.tile--work-ios { position: relative; }
+
+.tile--work-ios .work-card__head {
+  position: relative;
+  z-index: 2;
+}
+
+.work-card__phone {
+  position: absolute;
+  right: 84px;
+  /* 24px breathing room from the card's top edge — bottom is left free
+     to bleed past the card and get cropped by its overflow:hidden */
+  top: 24px;
+  /* sized off the card's own height (not a fixed px) so it scales up/down
+     together with the card at any viewport, instead of staying pinned
+     at one size while the card around it grows or shrinks */
+  height: 108%;
+  width: auto;
+  /* 100% resolves against the card's own box (its positioned ancestor) —
+     reserve room for the 274px text column + its padding + the gap
+     before the phone, so on narrower windows (card gets narrower, not
+     just shorter) the phone shrinks instead of covering the text */
+  max-width: calc(100% - 410px);
+  z-index: 1;
+  pointer-events: none;
+  transition: transform 620ms var(--ease);
+}
+
+.tile--work-ios:hover .work-card__phone {
+  transform: rotate(8deg);
+}
+
+/* Search & Growth card — real Figma-exported search-UI mockup (search.svg),
+   positioned the same way the phone mockup bleeds into the iOS card. */
+.tile--work-search { position: relative; overflow: hidden; }
+
+.tile--work-search .work-card__head,
+.tile--work-search .work-card__desc {
+  position: relative;
+  z-index: 2;
+}
+
+/* positioned to match the Figma reference exactly (node 37:1556, 100:2362):
+   left = 24px padding + 274px text column + 14.92px gap = 312.92px;
+   right = 80.92px clearance for the arrow button. Both fixed (the text
+   column and button are fixed-px too), so width is whatever's left
+   between them — shrinks gracefully instead of drifting into the text
+   or the button on a narrower card. */
+.search-mock-img {
+  position: absolute;
+  left: 312.92px;
+  top: 24px;
+  width: calc(100% - 393.84px);
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 28px rgba(30, 30, 30, 0.08));
+  transition: transform 620ms var(--ease);
+}
+
+.tile--work-search:hover .search-mock-img {
+  transform: scale(1.04);
+}
+
+/* ---------- motion ---------- */
+.rise {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(14px);
+  transition:
+    opacity 900ms var(--ease) var(--d, 0ms),
+    transform 900ms var(--ease) var(--d, 0ms),
+    filter 900ms var(--ease) var(--d, 0ms);
+}
+
+.is-in .rise {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise { transition-duration: 1ms !important; }
+}
+
+/* ---------- Work page (node 37:2148 in Figma) ---------- */
+.work-page {
+  position: relative;
+  padding: 112px var(--side-padding) 96px;
+}
+
+.work-page__inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.work-page__heading {
+  margin: 0;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 56px;
+  letter-spacing: -0.5px;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.work-filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.work-filter {
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  border-radius: var(--radius-pill);
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--color-text);
+  opacity: 0.5;
+  transition: opacity 420ms var(--ease), border-color 420ms var(--ease);
+}
+
+.work-filter:hover { opacity: 0.85; }
+
+.work-filter.is-active {
+  opacity: 1;
+  border-color: #333;
+}
+
+.work-filter__icon {
+  display: inline-flex;
+  color: var(--color-sparkle);
+}
+
+.work-grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.work-row {
+  display: flex;
+  column-gap: var(--space-2);
+}
+
+/* work-card reuses .tile (radius/bg/overflow) — this adds its own layout */
+.work-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  min-width: 0;
+  gap: 28px;
+  height: 600px;
+  padding: var(--space-4);
+  transition: transform 620ms var(--ease), background 620ms var(--ease);
+}
+
+.work-card--fixed {
+  flex: 0 0 750px;
+  width: 750px;
+}
+
+.work-card--fill {
+  flex: 1 1 auto;
+}
+
+.work-card:hover { background: var(--color-tile-hover); }
+
+/* locked project card (e.g. Kamana) — not yet ready to show, so it drops
+   the hover highlight and arrow-lift that normally signal "click me". */
+.work-card--locked {
+  cursor: default;
+}
+
+.work-card--locked:hover { background: var(--color-tile); }
+
+.work-card--locked:hover .tile__arrow { transform: none; }
+
+.work-card__lock-badge {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(30, 30, 30, 0.07);
+  color: var(--color-muted);
+}
+
+.work-card__media {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  border-radius: 24px;
+  background: var(--color-media);
+  overflow: hidden;
+}
+
+.work-card__media--video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.work-card__media--image {
+  background: transparent;
+}
+
+/* app screenshot as a card cover: fills the frame, shown whole (contain) so the
+   product's header buttons aren't cropped */
+.work-card__media--screen {
+  background: var(--color-media);
+}
+
+.work-card__media--screen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left top;
+  display: block;
+}
+
+.work-card__media--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: transparent;
+}
+
+.work-card__media-icon {
+  width: 100px;
+  height: 100px;
+  --poster-color: transparent;
+  background-color: transparent;
+}
+
+.work-card__media-caption {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-sparkle);
+}
+
+.work-card__phone-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 94%;
+  width: auto;
+  pointer-events: none;
+  transition: transform 620ms var(--ease);
+}
+
+.work-card:hover .work-card__phone-img {
+  transform: translate(-50%, -50%) rotate(6deg);
+}
+
+.work-card__divider {
+  height: 1px;
+  width: 100%;
+  background: rgba(30, 30, 30, 0.09);
+}
+
+.work-card__foot {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.work-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 472px;
+}
+
+.work-card__title {
+  margin: 0;
+  font-family: 'Red Hat Display', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: -0.8px;
+  color: var(--color-text-black);
+}
+
+.work-card .work-card__desc {
+  max-width: none;
+  font-size: 19.8px;
+}
+
+.work-card__arrow {
+  width: 64px;
+  height: 64px;
+}
+
+/* ---------- Case study pages (e.g. iask-search.html) ---------- */
+.case-page {
+  position: relative;
+  padding: 112px var(--side-padding) var(--space-7);
+}
+
+/* floating right-side table of contents — only shown once there's enough
+   dead gutter beside the 720px reading column to hold it without crowding
+   (see .case-inner comment above on why that gutter exists) */
+.case-toc {
+  position: fixed;
+  top: 50%;
+  right: clamp(24px, 3vw, 64px);
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.case-toc__link {
+  position: relative;
+  padding-left: 24px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-muted);
+  white-space: nowrap;
+  transition: color 320ms var(--ease);
+}
+
+.case-toc__link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 12px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+  transform: translateY(-50%);
+  transition: width 320ms var(--ease), opacity 320ms var(--ease), background 320ms var(--ease);
+}
+
+.case-toc__link:hover { color: var(--color-text); }
+
+.case-toc__link.is-active {
+  color: var(--color-text-black);
+}
+
+.case-toc__link.is-active::before {
+  width: 24px;
+  opacity: 1;
+  background: var(--color-sparkle);
+}
+
+@media (max-width: 1080px) {
+  .case-toc { display: none; }
+}
+
+.case-inner {
+  /* Scoped narrower than --content-width on purpose: this page is a single
+     reading column, so centering it at 1360px would leave a huge dead gutter
+     on the right — Diana flagged this 2026-08-20. Centering the COLUMN, not
+     the text (headings/body stay left-aligned throughout), so this doesn't
+     reintroduce the AI-RULES CMP-01 "centred column" pattern — that rule
+     bans centre text-align, not a centered container.
+
+     Width is 720px, matching .case-section/.case-feature below (not 880,
+     which only matched the hero heading's own cap) — Diana caught that the
+     880 box left full-width elements (meta strip, tags, stats, and their
+     hairline dividers) visibly wider than the AI-RULES-capped 62ch body
+     paragraphs (~586px rendered), so the dividers read as floating past
+     where the text actually ended. 720 keeps everything — divider width,
+     meta strip, stats grid — much closer to true text width without
+     stretching paragraphs past their readability cap (2026-08-20). */
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.case-crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-muted);
+  margin-bottom: var(--space-4);
+  transition: color 320ms var(--ease);
+}
+
+.case-crumb:hover { color: var(--color-text); }
+
+.case-crumb svg { flex-shrink: 0; transform: rotate(180deg); }
+
+.case-tags {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin: 0 0 var(--space-3);
+}
+
+.case-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid #333;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.case-tag--muted {
+  border-color: transparent;
+  background: var(--color-tile);
+  color: var(--color-desc);
+}
+
+.case-hero__heading {
+  max-width: 880px;
+  margin: 0 0 var(--space-3);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-text-black);
+  text-wrap: balance;
+  hyphens: none;
+}
+
+.case-hero__sub {
+  max-width: 62ch;
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--color-desc);
+  text-wrap: pretty;
+}
+
+.case-meta {
+  display: flex;
+  flex-wrap: wrap;
+  /* was --space-5 (48px): with 4 items (Role/Company/Timeline/Tools) that
+     overflowed the 720px column by ~8px and wrapped Tools onto its own
+     line — --space-4 keeps room to breathe while fitting all four on one
+     line at this width (Diana flagged the wrap 2026-09-22). */
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(30, 30, 30, 0.09);
+}
+
+.case-meta__item { display: flex; flex-direction: column; gap: 6px; }
+
+.case-meta__label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-muted);
+}
+
+.case-meta__value {
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+/* generic reading section — editorial column, left-aligned (not centered,
+   per AI-RULES CMP-01) so it never reads as the default centered layout */
+.case-section {
+  max-width: 720px;
+  margin: var(--space-7) 0 0;
+  /* Clears the fixed .nav-wrap (~76px tall) when a TOC link scrollIntoViews
+     this section to viewport y:0 — otherwise the opaque nav now covers the
+     eyebrow/heading it used to just show through. */
+  scroll-margin-top: 120px;
+}
+
+.case-section__eyebrow {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-sparkle);
+  margin: 0 0 var(--space-1);
+}
+
+.case-section__heading {
+  margin: 0 0 var(--space-2);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text-black);
+  text-wrap: balance;
+}
+
+.case-section p {
+  margin: 0 0 var(--space-2);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--color-desc);
+  text-wrap: pretty;
+  max-width: 62ch;
+}
+
+.case-section p:last-child { margin-bottom: 0; }
+
+/* plain hairline rule between two sections, same treatment as .case-meta's
+   top border — used where a section used to end on a media block and now
+   needs its own visual break instead (e.g. iask-ios.html subscription →
+   outcome, once that section's placeholder image was removed). */
+.case-divider {
+  max-width: 720px;
+  margin: var(--space-7) auto 0;
+  border-top: 1px solid rgba(30, 30, 30, 0.09);
+}
+
+/* short, bold problem statement right under the heading — lets someone
+   grasp the problem without reading the full paragraph (Diana's request:
+   surface the problem/goal immediately, keep the rest as optional detail) */
+.case-lede {
+  font-size: 19px;
+  line-height: 1.55;
+  font-weight: 500;
+  color: var(--color-text-black);
+}
+
+/* goal callout — pulled out of the paragraph so it's scannable at a glance */
+.case-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 62ch;
+  margin: 0 0 var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-tile);
+  border-left: 3px solid var(--color-sparkle);
+  border-radius: 4px;
+}
+
+.case-goal__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-sparkle);
+}
+
+.case-goal__text {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text-black);
+}
+
+/* content-gap callout — flags a spot where real input is still needed
+   instead of guessing at a fact. Same honesty as .case-media--placeholder
+   below, just for text: dashed border keeps it from reading as a finished,
+   confident claim. */
+.case-note--todo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 62ch;
+  margin: var(--space-2) 0;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-tile);
+  border: 1px dashed rgba(30, 30, 30, 0.25);
+  border-radius: 4px;
+}
+
+.case-note--todo__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.case-note--todo__text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+/* short labeled flow line (e.g. "Keyword → Analysis → Brief → Writing →
+   Editor") — sits between the solution callout and its explanation */
+.case-flow {
+  margin: var(--space-2) 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--color-muted);
+}
+
+/* numbered findings list — §8-safe alternative to bullet dots */
+.case-findings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-3) 0 var(--space-4);
+}
+
+.case-finding {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.case-finding__index {
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-muted);
+  padding-top: 2px;
+}
+
+.case-finding p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--color-text);
+  max-width: 56ch;
+}
+
+/* explanation + its own image, stacked — one step at a time so nobody has
+   to scroll between a screenshot and the text describing it */
+.case-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin: var(--space-4) 0;
+}
+
+.case-step .case-media {
+  margin-top: var(--space-2);
+  min-height: 0;
+}
+
+/* feature blocks — the "show thinking" units */
+.case-feature {
+  max-width: 720px;
+  margin: var(--space-7) 0 0;
+  padding-top: var(--space-5);
+  border-top: 1px solid rgba(30, 30, 30, 0.09);
+}
+
+.case-feature__media,
+.case-media {
+  margin-top: var(--space-4);
+  border-radius: var(--radius-tile);
+  background: var(--color-media);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+}
+
+.case-feature__media img,
+.case-media img {
+  max-height: 520px;
+  width: auto;
+  margin: var(--space-4) 0;
+}
+
+/* generic media placeholder — swap for a real screenshot/video, keeps the
+   gray box from reading as a bug while the section has no asset yet */
+.case-media--placeholder {
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.case-media__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+.case-media__sub {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* real image, shown at full width instead of the default centered/
+   height-capped treatment (that default suits a portrait placeholder,
+   not a wide screenshot like this one) */
+.case-media--image img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  margin: 0;
+}
+
+/* wrapper for an image + its caption, used when a screenshot needs a
+   small label (e.g. naming which step of an iteration it shows). Plain
+   background, no border-radius/overflow-hidden — unlike .case-media, so
+   the caption renders as text below the card, not inside its tinted,
+   rounded-corner box. */
+.case-media-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.case-media-item .case-media {
+  margin-top: 0;
+}
+
+/* breathing room between a compare slider and the media that follows it */
+.case-compare + .case-media-item {
+  margin-top: var(--space-6);
+}
+
+p.case-media-caption {
+  display: block;
+  margin: 0;
+  padding: 0 2px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-muted);
+  max-width: none;
+}
+
+/* two real screenshots shown side by side (Feature 02 — sticky input +
+   related-questions module) instead of stacked full-width */
+.case-media-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  align-items: start;
+}
+
+.case-media-grid .case-media {
+  margin-top: 0;
+  min-height: 0;
+}
+
+.case-media__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+/* real video (e.g. Outcome section's flow walkthrough), same full-width
+   treatment as .case-media--image */
+.case-media--video video {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  margin: 0;
+  display: block;
+}
+
+/* before/after compare slider — Feature 01 (search entry redesign). Two
+   stacked panels ("before" full-size underneath, "after" clipped on top);
+   a native <input type="range"> is stretched invisibly over the whole box
+   and drives the clip-path, so dragging, touch and keyboard (arrow keys
+   once focused) all come for free instead of hand-rolled pointer events.
+   Swap the two .case-compare__panel divs for <img> tags once real
+   before/after screenshots exist — everything else keeps working. */
+/* title block that introduces the before/after slider, so it reads as its
+   own interactive comparison and not as one more screenshot */
+.case-compare-intro {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(30, 30, 30, 0.09);
+}
+
+.case-compare-intro__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--color-text, #1e1e1e);
+}
+
+.case-compare-intro__hint {
+  margin: var(--space-1) 0 0;
+  font-size: 15px;
+  color: var(--color-muted);
+}
+
+.case-compare-intro + .case-compare {
+  margin-top: var(--space-3);
+}
+
+.case-compare {
+  position: relative;
+  margin-top: var(--space-4);
+  border-radius: var(--radius-tile);
+  background: var(--color-media);
+  overflow: hidden;
+  /* Matches the before/after screenshots' own ratio so both images fill
+     the box edge-to-edge and stay pixel-aligned as the slider moves. */
+  aspect-ratio: 4 / 3;
+}
+
+.case-compare__panel {
+  position: absolute;
+  inset: 0;
+}
+
+.case-compare__panel--after {
+  clip-path: inset(0 0 0 50%);
+}
+
+.case-compare__panel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.case-compare__label {
+  position: absolute;
+  top: var(--space-2);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.case-compare__label--before { left: var(--space-2); }
+.case-compare__label--after { right: var(--space-2); }
+
+.case-compare__handle-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: #fff;
+  transform: translateX(-50%);
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(30, 30, 30, 0.08);
+}
+
+.case-compare__handle-grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-sparkle);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(30, 30, 30, 0.2);
+}
+
+.case-compare__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: ew-resize;
+  opacity: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.case-compare__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 40px;
+  height: 40px;
+}
+
+.case-compare__range::-moz-range-thumb {
+  width: 40px;
+  height: 40px;
+  border: none;
+}
+
+/* results / stats strip — plain hairline dividers, no left-border accent
+   (AI-RULES §8 bans the notification-card coloured stub). Unused as of
+   2026-09-22: every case page now uses the grouped .case-results layout
+   below instead (iask-platform.html was the last holdout). Left in place
+   in case a future ungrouped stats strip is wanted again. */
+.case-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: var(--space-7);
+  background: var(--color-tile);
+  border-radius: var(--radius-tile);
+}
+
+.case-stat {
+  padding: var(--space-4) var(--space-3);
+  border-left: 1px solid rgba(30, 30, 30, 0.09);
+}
+
+.case-stat:first-child { border-left: none; }
+
+.case-stat__value {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.15em;
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+  letter-spacing: -0.02em;
+  color: var(--color-text-black);
+  margin-bottom: 6px;
+}
+
+/* Inline before/after arrow (e.g. "12% → 34%") — an SVG, not the banned
+   keyboard-glyph arrow (AI-RULES §8). Sized in em so it scales with the
+   clamp() above; muted so digits stay the visual focus. */
+.case-stat__arrow {
+  width: 0.55em;
+  height: 0.55em;
+  flex-shrink: 0;
+  color: var(--color-muted);
+}
+
+.case-stat__label {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-desc);
+}
+
+/* results, grouped variant — first used on iask-search.html, now on every
+   case page's Results section: grouped by which feature or phase drove
+   them, rather than one flat 4-up strip, so the numbers keep their story
+   instead of floating loose. Fully separate classes from .case-stat*
+   above. No left-border accent stub (AI-RULES §8 bans that
+   notification-card look) — the grouping itself carries the visual
+   interest. */
+.case-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-7);
+  /* Same nav-clearance fix as .case-section — #results is a TOC scroll
+     target too, but doesn't share that class. */
+  scroll-margin-top: 120px;
+}
+
+.case-result-group {
+  padding: var(--space-4);
+  background: var(--color-tile);
+  border-radius: var(--radius-tile);
+  transition: background 420ms var(--ease), transform 420ms var(--ease);
+}
+
+.case-result-group:hover {
+  background: var(--color-tile-hover);
+  transform: translateY(-3px);
+}
+
+.case-result-group__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-sparkle);
+  margin-bottom: var(--space-3);
+}
+
+.case-result-group__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.case-result-group__stats--single {
+  grid-template-columns: 1fr;
+}
+
+.case-result-stat {
+  padding: 0 var(--space-3);
+  border-left: 1px solid rgba(30, 30, 30, 0.09);
+}
+
+.case-result-stat:first-child {
+  padding-left: 0;
+  border-left: none;
+}
+
+.case-result-stat__value {
+  display: flex;
+  align-items: center;
+  gap: 0.1em;
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  letter-spacing: -0.02em;
+  color: var(--color-text-black);
+  margin-bottom: 6px;
+}
+
+/* Small diagonal "up" glyph before each number — an SVG, not the banned
+   keyboard-glyph arrow (AI-RULES §8) — ties each stat back to the same
+   arrow motif used on tile/crumb affordances elsewhere on the site, so
+   the growth reads as part of the same visual language rather than a
+   decorative add-on. Sized down from the tile arrows since it sits
+   inline with large type. */
+.case-result-stat__trend {
+  flex-shrink: 0;
+  width: 0.5em;
+  height: 0.5em;
+  color: var(--color-sparkle);
+}
+
+.case-result-stat__label {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-desc);
+}
+
+.case-footer {
+  margin-top: var(--space-7);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(30, 30, 30, 0.09);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.case-footer__next {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text-black);
+}
+
+/* footer nav arrow — same diagonal glyph as the crumb/tile arrows, an SVG
+   rather than a typed "←"/"→" character (AI-RULES §8 bans keyboard-glyph
+   arrows in copy, even a plain one). Unrotated = forward ("go to next
+   case"), --back rotates it to match the crumb's "return" direction. */
+.case-footer__next svg { flex-shrink: 0; }
+.case-footer__next--back svg { transform: rotate(180deg); }
+
+/* Short viewport (window height, not width) — .hero-col's cards get
+   squeezed by the fixed 100svh budget and the description/mockup start
+   clipping against .tile's overflow:hidden. Below this height, drop
+   them and keep just the title + arrow so nothing looks cut off
+   (Diana flagged the clipped "Selected Work" cards on a short window,
+   2026-09-22). */
+@media (max-height: 800px) {
+  .tile--work .work-card__desc,
+  .search-mock-img,
+  .work-card__phone {
+    display: none;
+  }
+}
+
+/* ---------- About page — bento block layout ----------
+   Diana's call (2026-09-26): the first draft read as another case study
+   (narrow reading column, right-side TOC) and she wanted the homepage's
+   asymmetric tile/bento feel instead — "распредели информацию по блокам,
+   как на хомпейдже". So this page drops .case-page/.case-inner entirely
+   and reuses the generic .tile chrome (rounded corner, --color-tile bg)
+   at the full --content-width grid, same width as the homepage hero row,
+   not the 720px case-study column. Headings/body stay left-aligned inside
+   each block per AI-RULES CMP-01 either way. */
+.about-page {
+  position: relative;
+  padding: 112px var(--side-padding) var(--space-7);
+}
+
+.about-grid {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-2);
+}
+
+.about-grid .span-2 { grid-column: span 2; }
+.about-grid .span-3 { grid-column: span 3; }
+.about-grid .span-4 { grid-column: span 4; }
+.about-grid .span-6 { grid-column: span 6; }
+
+/* shared block chrome — same visual language as .tile--about/.tile--work
+   (rounded, tinted, lifts to --color-tile-hover on hover) */
+.about-block {
+  position: relative;
+  border-radius: var(--radius-tile);
+  background: var(--color-tile);
+  overflow: hidden;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  transition: background 620ms var(--ease);
+}
+
+.about-block:hover { background: var(--color-tile-hover); }
+
+/* photo blocks bleed edge-to-edge instead — hovering them shouldn't tint
+   the image, so they opt back out of the hover/padding above */
+.about-block--photo {
+  padding: 0;
+  min-height: 220px;
+}
+
+.about-block--photo:hover { background: var(--color-tile); }
+
+.about-block--photo img {
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  object-fit: cover;
+  display: block;
+}
+
+/* identity block — the big "who I am" card, same role .tile--hero plays
+   on the homepage but laid flat instead of full-viewport-height */
+.about-block--identity {
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 420px;
+}
+
+.about-block--identity .about-block__eyebrow { margin-bottom: 2px; }
+
+/* reuses the homepage's icon+tagline row and its glossy glass-star icon
+   (assets/about-glass-star.png) — same hover pop, just re-scoped since
+   this card isn't a .tile--about */
+.about-block--identity .about-tagline-row { align-items: flex-start; }
+
+/* sized up from the homepage's 56px default (2026-09-26 pass) — scoped
+   here rather than changed on .about-icon itself, so the homepage tile
+   this class was built for isn't affected */
+.about-block--identity .about-icon {
+  width: 64px;
+  height: 64px;
+}
+
+.about-block--identity:hover .about-icon {
+  transform: rotate(18deg) scale(1.1);
+}
+
+.about-identity__heading {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text-black);
+}
+
+.about-identity__sub {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--color-desc);
+}
+
+.about-block__eyebrow {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-sparkle);
+}
+
+/* eyebrow variant carrying the small glossy sparkle (assets/menu-star.png)
+   used as a repeating accent — same icon the nav uses, echoed down the
+   page so the "glossy icon" motif shows up more than once, per Diana's
+   2026-09-26 note ("на протяжении всей страницы... глянцевые иконки") */
+.about-block__eyebrow--icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* sized up from the first pass (2026-09-26) — Diana flagged the sparkle
+   as "there but basically invisible" at 12px; 20px reads as a real accent
+   instead of a rounding artifact next to the eyebrow text */
+.about-block__eyebrow--icon img {
+  display: block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.about-block__title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-text-black);
+}
+
+.about-block p.about-block__text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-desc);
+}
+
+/* story + personal blocks read at a normal-tile height, not the identity
+   block's tall min-height */
+.about-block--story,
+.about-block--personal {
+  min-height: 240px;
+  justify-content: flex-start;
+}
+
+.about-block--personal .about-chips { margin-top: auto; }
+
+/* combined work + education timeline, replacing the earlier three-card
+   row — Diana wanted this to actually read as a timeline, not cards
+   (2026-09-26). Markers reuse the same glossy sparkle as the eyebrow
+   icons above, connected by a hairline rail like a real timeline.
+   Sized up a second pass the same day — bigger markers, bigger titles,
+   more air between entries, so the block reads as a highlight instead
+   of fine print. */
+.about-block--timeline { justify-content: flex-start; }
+
+/* gap between the "Timeline" eyebrow and the first bullet — third pass,
+   2026-09-26: Diana wanted breathing room here specifically, not just
+   between entries */
+.about-mini-timeline {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-mini-timeline__item {
+  display: flex;
+  gap: 18px;
+  padding-bottom: var(--space-4);
+}
+
+.about-mini-timeline__item:last-child { padding-bottom: 0; }
+
+.about-mini-timeline__rail {
+  flex-shrink: 0;
+  width: 26px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.about-mini-timeline__marker {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
+
+.about-mini-timeline__item:not(:last-child) .about-mini-timeline__rail::after {
+  content: '';
+  position: absolute;
+  top: 26px;
+  bottom: calc(-1 * var(--space-4));
+  left: 50%;
+  width: 1px;
+  background: rgba(30, 30, 30, 0.14);
+  transform: translateX(-50%);
+}
+
+.about-mini-timeline__content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  padding-top: 3px;
+}
+
+.about-mini-timeline__title {
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--color-text-black);
+}
+
+.about-mini-timeline__meta {
+  font-size: 16px;
+  color: var(--color-muted);
+}
+
+/* ---------- Contact page (contact.html) ----------
+   Its own page: centered heading plus one plaque per channel (email,
+   LinkedIn). Same bento chrome as the rest of the site (.tile color,
+   --radius-tile, hover tint); eyebrow reuses .about-block__eyebrow. */
+.contact-page {
+  position: relative;
+  min-height: 100svh;
+  padding: 112px var(--side-padding) var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-inner {
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.contact-heading {
+  margin: 0 0 var(--space-3);
+  text-align: center;
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  letter-spacing: -0.03em;
+  color: var(--color-text-black);
+}
+
+.contact-block {
+  position: relative;
+  border-radius: var(--radius-tile);
+  background: var(--color-tile);
+  overflow: hidden;
+  padding: var(--space-3);
+  min-height: 132px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  transition: background 620ms var(--ease);
+}
+
+.contact-block:hover { background: var(--color-tile-hover); }
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: center;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  font-weight: 500;
+  color: var(--color-text-black);
+  word-break: break-word;
+}
+
+.contact-link svg {
+  flex-shrink: 0;
+  transition: transform 520ms var(--ease);
+}
+
+.contact-block:hover .contact-link svg {
+  transform: translate(3px, -3px);
+}
+
+/* the whole plaque is the link, so the hit area matches what you see */
+.contact-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+@media (max-width: 720px) {
+  .contact-block { min-height: 120px; padding: var(--space-3); }
+}
+
+/* ---------- About page — "How I Work" + mini task board ----------
+   Added 2026-09-26 at Diana's request, referencing bohdana.design for
+   layout/interaction ideas only — content and copy below are original,
+   drafted from what's already known about her actual workflow, not
+   copied from that reference site. */
+
+/* shared secondary heading for these full-width blocks — same treatment
+   as .contact-heading/.about-identity__heading but its own class per the
+   site's per-block-type convention (each of those three is intentionally
+   separate, not a shared base). */
+.about-block__heading {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  letter-spacing: -0.02em;
+  color: var(--color-text-black);
+}
+
+.about-block--philosophy,
+.about-block--board {
+  gap: var(--space-2);
+}
+
+.about-philosophy-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-1);
+}
+
+.about-philosophy-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-top: 1px solid rgba(30, 30, 30, 0.09);
+}
+
+.about-philosophy-row:first-child {
+  border-top: none;
+  padding-top: var(--space-1);
+}
+
+.about-philosophy-row__label {
+  flex: 0 0 240px;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--color-text-black);
+}
+
+.about-philosophy-row__desc {
+  margin: 0;
+  flex: 1 1 auto;
+  max-width: 62ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-desc);
+}
+
+/* mini task board — playful drag-to-reorder demo, no backend/persistence;
+   state resets on reload. Drag is implemented with Pointer Events (not
+   native HTML5 drag/drop) specifically so it also works on touch, since
+   this is meant to be seen on mobile too. See script.js. */
+.mini-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.mini-board__col {
+  background: #fff;
+  border: 1px solid #E3E3E8;
+  border-radius: 20px;
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mini-board__col-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.mini-board__col-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-black);
+}
+
+.mini-board__count {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.mini-board__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 64px;
+  flex: 1;
+}
+
+.mini-board__card {
+  background: #fff;
+  border: 1px solid #E3E3E8;
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: grab;
+  /* stops the browser from scrolling the page while a touch-drag is in
+     progress on this card — required for the pointer-based drag in
+     script.js to work on mobile */
+  touch-action: none;
+  transition: box-shadow 220ms var(--ease);
+}
+
+.mini-board__card:hover { box-shadow: 0 4px 14px rgba(30, 30, 30, 0.08); }
+
+.mini-board__card.is-dragging {
+  opacity: 0.55;
+  cursor: grabbing;
+  box-shadow: 0 10px 24px rgba(30, 30, 30, 0.16);
+}
+
+.mini-board__card-title { font-size: 14.5px; color: var(--color-text); }
+
+.mini-board__card--done .mini-board__card-title {
+  text-decoration: line-through;
+  color: var(--color-muted);
+}
+
+.mini-board__tag {
+  align-self: flex-start;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.mini-board__tag--low { background: #E7F0FE; color: #3B6FB0; }
+.mini-board__tag--medium { background: #FDEBEF; color: #B3496A; }
+.mini-board__tag--high { background: #FDEEDD; color: #B4732A; }
+
+.about-board-hint { margin-top: 2px; }
+
+/* ---------- responsive ----------
+   Desktop-first per current iteration — mobile layout intentionally
+   not tuned yet, coming after the desktop version is locked. */
+@media (max-width: 900px) {
+  .hero-row { grid-template-columns: 1fr; }
+  .hero-left { width: 100%; height: auto; }
+  .tile--hero-photo { min-height: 320px; }
+  .tile--hero-text { min-height: 0; padding: 24px; }
+  .work-row { flex-direction: column; row-gap: var(--space-4); }
+  .work-card--fixed { width: 100%; flex: 1 1 auto; }
+  .case-stats { grid-template-columns: 1fr 1fr; }
+  .case-stat:nth-child(3) { border-left: none; }
+  .case-results { grid-template-columns: 1fr; }
+  .case-media-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-grid .span-2,
+  .about-grid .span-3,
+  .about-grid .span-4,
+  .about-grid .span-6 {
+    grid-column: span 1;
+  }
+  .about-block--photo { min-height: 320px; }
+  .about-block--identity { min-height: 0; }
+  .about-philosophy-row { flex-direction: column; gap: 6px; }
+  .about-philosophy-row__label { flex-basis: auto; }
+  .mini-board { grid-template-columns: 1fr; }
+}
+
+/* user persona card — "Who it's for" in the SEO Article Generator case.
+   A summary of the primary user, built from the research findings; no
+   invented name, age, photo or quote. */
+.persona {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 0;
+  margin: var(--space-3) 0 0;
+  background: var(--color-tile);
+  border-radius: var(--radius-tile);
+  overflow: hidden;
+}
+
+.persona__side {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: var(--space-4);
+  background: linear-gradient(160deg, rgba(241, 86, 127, 0.10), rgba(252, 193, 120, 0.16));
+}
+
+.persona__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  margin-bottom: var(--space-2);
+  border-radius: 24px;
+  background: #fff;
+  color: var(--color-sparkle);
+}
+
+.persona__label,
+.persona__eyebrow,
+.persona__flow-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-sparkle);
+}
+
+.persona__role {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-text-black);
+}
+
+.persona__context {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--color-desc);
+}
+
+.persona__flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+}
+
+.persona__flow-label {
+  color: var(--color-muted);
+  letter-spacing: 0.08em;
+}
+
+.persona__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.persona__chip {
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.persona__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.persona__block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.persona__block p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text-black);
+}
+
+.persona__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.persona__list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text-black);
+}
+
+.persona__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-sparkle);
+}
+
+@media (max-width: 720px) {
+  .persona { grid-template-columns: 1fr; }
+  .persona__side, .persona__main { padding: var(--space-3); }
+}
+
+/* competitor comparison table */
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.case-matrix-wrap {
+  margin: var(--space-3) 0 var(--space-1);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--color-tile);
+  border-radius: 20px;
+}
+.case-matrix {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.case-matrix th, .case-matrix td {
+  padding: 12px 4px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+.case-matrix thead th {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+.case-matrix tbody th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--color-text-black);
+  padding-left: var(--space-2);
+  width: 29%;
+}
+.case-matrix tbody tr:last-child th, .case-matrix tbody tr:last-child td { border-bottom: 0; }
+.case-matrix .is-yes { color: #2f7d4f; font-size: 17px; font-weight: 700; }
+.case-matrix .is-unknown { color: var(--color-muted); font-weight: 600; }
+.case-matrix .is-text { color: var(--color-desc); font-size: 12px; }
+.case-matrix__ours { background: rgba(153,53,64,0.08); }
+.case-matrix thead .case-matrix__ours { color: var(--color-sparkle); }
+.case-matrix .case-matrix__ours.is-text { color: var(--color-sparkle); font-weight: 600; }
+.case-matrix__note { margin: 0 0 var(--space-2); font-size: 13px; color: var(--color-muted); }
+@media (max-width: 720px) {
+  .case-matrix { min-width: 640px; }
+}
+
+/* solves chip under a step caption */
+.case-step__solves {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-sparkle);
+  background: rgba(153,53,64,0.08);
+  border-radius: var(--radius-pill);
+}
+
+/* brand kit: logo + palette */
+.brand-kit {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3);
+  background: var(--color-tile);
+  border-radius: var(--radius-tile);
+}
+.brand-kit__logo { width: 86px; height: 86px; flex: none; }
+.brand-kit__swatches {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  flex: 1;
+}
+.brand-kit__swatches li {
+  position: relative;
+  height: 86px;
+  border-radius: 14px;
+  background: var(--c);
+  border: var(--b, 0);
+}
+.brand-kit__swatches span {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.brand-kit__swatches li:last-child span { color: var(--color-muted); }
+@media (max-width: 720px) {
+  .brand-kit { flex-direction: column; align-items: flex-start; }
+  .brand-kit__swatches { width: 100%; grid-template-columns: repeat(3, 1fr); }
+}
+
+.case-finding__body { display: flex; flex-direction: column; align-items: flex-start; }
+.case-finding__body p { margin: 0; }
+
+.case-step .case-media--placeholder { min-height: 220px; flex-direction: column; gap: 4px; }
+
+/* screen gallery, no captions */
+.case-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.case-gallery .case-media { margin-top: 0; min-height: 0; }
+@media (max-width: 720px) {
+  .case-gallery { grid-template-columns: 1fr; }
+}
+
+/* context tiles */
+.case-context { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); margin-top: var(--space-3); }
+.case-context__tile { padding: var(--space-3); background: var(--color-tile); border-radius: 24px; }
+.case-context__label { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-sparkle); }
+.case-context__tile p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--color-text-black); }
+
+/* gap -> decision fragments */
+.decisions { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4) var(--space-2); margin-top: var(--space-4); align-items: start; }
+.decision { margin: 0; }
+.decision--wide { grid-column: 1 / -1; }
+.decision .case-media { margin-top: 0; min-height: 0; }
+.decision figcaption { display: flex; flex-direction: column; gap: 2px; padding: 12px 4px 0; }
+.decision__gap { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: var(--color-muted); }
+.decision__text { font-size: 15px; line-height: 1.4; color: var(--color-text-black); }
+@media (max-width: 720px) {
+  .case-context { grid-template-columns: 1fr; }
+  .decisions { grid-template-columns: 1fr; }
+}
+
+/* dark band: page background eases to navy behind the screens block */
+body { transition: background-color 700ms var(--ease); }
+.nav-wrap { transition: background-color 700ms var(--ease); }
+.pill-nav__item, .case-section__eyebrow, .case-toc__link { transition: color 700ms var(--ease); }
+body.is-dark-bg { background-color: #18181E; }
+body.is-dark-bg .nav-wrap { background: rgba(24, 24, 30, 0.72); }
+body.is-dark-bg .pill-nav__item { color: #f3f4fb; }
+body.is-dark-bg .case-toc__link { color: rgba(243, 244, 251, 0.5); }
+body.is-dark-bg .case-toc__link:hover,
+body.is-dark-bg .case-toc__link.is-active { color: #f3f4fb; }
+body.is-dark-bg [data-dark-section] .case-section__eyebrow { color: rgba(243, 244, 251, 0.7); }
+[data-dark-section] { padding-top: var(--space-7); padding-bottom: var(--space-7); }
+@media (prefers-reduced-motion: reduce) {
+  body, .nav-wrap, .pill-nav__item, .case-section__eyebrow, .case-toc__link { transition: none; }
+}
+
+/* dark band now wraps Brand + Screens: light text inside while it is on */
+.case-section__heading, .case-section p, .case-media__label { transition: color 700ms var(--ease); }
+body.is-dark-bg [data-dark-section] .case-section__heading { color: #f3f4fb; }
+body.is-dark-bg [data-dark-section] .case-section > p { color: rgba(243, 244, 251, 0.75); }
+
+/* hero image that breaks out of the 720px reading column; text stays narrow */
+.case-media--wide {
+  --w: calc(100vw - 2 * var(--side-padding));
+  width: var(--w);
+  margin-left: calc(50% - var(--w) / 2);
+}
+@media (min-width: 1081px) {
+  .case-media--wide { --w: min(1080px, calc(100vw - 340px)); }
+}
+
+/* key-word emphasis, used the same way across a case */
+.case-section p strong, .case-goal__text strong, .persona p strong { font-weight: 500; color: var(--color-text-black); }
+body.is-dark-bg [data-dark-section] .case-section p strong { color: #fff; }
+
+/* persona: compact details list in the side column, hairline between main blocks */
+.persona__list--small li { font-size: 14px; line-height: 1.4; color: var(--color-desc); }
+.persona__list--small li::before { top: 0.55em; width: 5px; height: 5px; }
+.persona__main .persona__block + .persona__block { padding-top: var(--space-3); border-top: 1px solid rgba(0,0,0,.08); }
+.persona li strong { font-weight: 500; color: var(--color-text-black); }
+
+/* competitor table: text-column width, labels wrap to at most two lines */
+.case-matrix { font-size: 14px; }
+.case-matrix th, .case-matrix td { padding: 16px 6px; }
+.case-matrix thead th { font-size: 13px; }
+.case-matrix thead th:first-child { width: 31%; }
+.case-matrix tbody th { width: 31%; padding-left: var(--space-3); font-size: 14px; line-height: 1.35; }
+.case-matrix .is-text { font-size: 13px; }
+.case-matrix .is-yes { font-size: 18px; }
+@media (max-width: 720px) {
+  .case-matrix { min-width: 640px; }
+}
+.case-matrix thead th { white-space: nowrap; padding-left: 2px; padding-right: 2px; font-size: 12.5px; }
+
+/* persona v2: neutral card, one quiet accent, type does the work */
+.persona { background: var(--color-tile); border-radius: var(--radius-tile); grid-template-columns: minmax(220px, 270px) 1fr; }
+.persona__side { background: transparent; gap: 4px; padding: var(--space-4); border-right: 1px solid rgba(0,0,0,.08); }
+.persona__avatar { width: 72px; height: 72px; margin-bottom: var(--space-2); border-radius: 50%; background: #E6E6EB; color: #fff; }
+.persona__avatar svg { width: 44px; height: 44px; }
+.persona__label, .persona__eyebrow, .persona__flow-label { color: var(--color-muted); font-weight: 500; letter-spacing: 0.1em; }
+.persona__role { font-size: 22px; }
+.persona__context { color: var(--color-desc); font-size: 15px; }
+.persona__flow { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid rgba(0,0,0,.08); }
+.persona__list li::before { background: #C4C4CC; }
+.persona__list--small li::before { background: #C4C4CC; }
+.persona__main { padding: var(--space-4); gap: var(--space-3); }
+.persona__main .persona__block + .persona__block { border-top: 1px solid rgba(0,0,0,.08); }
+@media (max-width: 720px) {
+  .persona__side { border-right: 0; border-bottom: 1px solid rgba(0,0,0,.08); }
+}
+
+/* competitor tiles: rows are tools, columns are what matters */
+.case-tiles-wrap { margin: var(--space-3) -8px var(--space-1); overflow: visible; }
+.case-tiles { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 8px; margin: 0; }
+.case-tiles .tile { border-radius: 16px; padding: 14px 14px; text-align: left; vertical-align: middle; font-size: 13.5px; line-height: 1.35; background: var(--color-tile); color: var(--color-text); font-weight: 400; }
+.case-tiles thead .tile--corner { background: transparent; padding: 0; }
+.case-tiles .tile--head, .case-tiles .tile--label { background: #E9E9EE; color: var(--color-text-black); font-weight: 500; }
+.case-tiles .tile--head { font-size: 13px; text-align: center; }
+.case-tiles .tile--head.tile--key { background: #1E1E1E; color: #fff; }
+.case-tiles .tile--label { font-size: 14px; width: 17%; }
+.case-tiles tbody td { height: 72px; }
+.case-tiles tbody td span { position: relative; display: block; padding-left: 16px; }
+.case-tiles tbody td span::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 8px; height: 8px; border-radius: 50%; background: #C4C4CC; }
+.case-tiles .tile--good span::before { background: #2f9e62; }
+.case-tiles .tile--part span::before { background: #e0a43a; }
+.case-tiles .tile--bad span::before { background: #d4605c; }
+.case-tiles .tile--none { color: var(--color-muted); }
+@media (max-width: 720px) {
+  .case-tiles-wrap { margin-left: 0; margin-right: 0; }
+  .case-tiles, .case-tiles tbody, .case-tiles tr, .case-tiles th, .case-tiles td { display: block; width: 100%; }
+  .case-tiles { border-spacing: 0; }
+  .case-tiles thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .case-tiles tbody tr { margin-bottom: 10px; padding: 14px; border-radius: 20px; background: var(--color-tile); }
+  .case-tiles .tile--label { width: 100%; padding: 0 0 10px; background: transparent; font-size: 16px; }
+  .case-tiles tbody td.tile { height: auto; padding: 10px 0; border-radius: 0; background: transparent; border-top: 1px solid rgba(0, 0, 0, 0.07); }
+  .case-tiles tbody td::before { content: attr(data-label); display: block; margin-bottom: 3px; font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-muted); }
+  .case-tiles tbody td[data-label="AI-sounding text"]::before { color: var(--color-text-black); }
+}
+
+/* page ends inside the dark chapter: keep the footer link readable */
+.case-footer__next { transition: color 700ms var(--ease); }
+body.is-dark-bg .case-footer__next { color: #fff; }
+
+/* screens sit right under the solution; band holds only the brand chapter */
+#screens { margin-top: var(--space-5); }
+[data-dark-section] > .case-section:first-child { margin-top: 0; }
+
+/* More Screens: rounded PNGs sit on the page, no grey box behind */
+.case-gallery .case-media--image { background: transparent; }
+
+/* Brand slides (logo, color, typography, landing) */
+.brand-slide {
+  margin-top: var(--space-3);
+  padding: 20px 20px 24px;
+  background: #fff;
+  border-radius: 24px;
+  color: #13121a;
+}
+.brand-slide__bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.brand-slide__bar span {
+  padding: 5px 10px;
+  background: #f3f4fb;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #161c3c;
+}
+.brand-slide__logos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.brand-slide__panel {
+  display: flex; align-items: center; justify-content: center;
+  height: 240px;
+  border-radius: 16px;
+}
+.brand-slide__panel img { width: 120px; height: 120px; }
+.brand-slide__panel--light { background: #f3f4fb; }
+.brand-slide__panel--dark { background: #161C3C; }
+.brand-slide__sizes {
+  display: flex; align-items: flex-end; gap: 24px;
+  margin-top: 12px; padding: 20px 24px;
+  background: #f3f4fb; border-radius: 16px;
+}
+.brand-slide__sizes img { display: block; height: auto; }
+
+.brand-swatches {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px;
+}
+.brand-swatch {
+  position: relative; height: 280px;
+  border-radius: 14px;
+  background: var(--c);
+  color: #fff;
+}
+.brand-swatch--grad { background: linear-gradient(45deg, #7893f5, #9a4af5); }
+.brand-swatch--light { color: #161c3c; box-shadow: inset 0 0 0 1px rgba(22, 28, 60, 0.1); }
+.brand-swatch__meta {
+  position: absolute; left: 12px; bottom: 12px;
+  font-size: 12px; line-height: 1.55; font-weight: 500;
+  font-family: "Poppins", var(--font-body, sans-serif);
+}
+
+.brand-type { display: grid; gap: 28px; }
+.brand-type__name {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(56px, 12vw, 104px);
+  font-weight: 500; line-height: 1; letter-spacing: -0.02em;
+  color: #161c3c;
+}
+.brand-type__glyphs {
+  display: grid; gap: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(15px, 3.4vw, 24px);
+  line-height: 1.35; color: #13121a;
+  overflow-wrap: anywhere;
+}
+.brand-slide .brand-type__note { margin: 0; font-size: 13px; color: #6b6f85; }
+
+.brand-slide--landing .case-media { margin-top: 0; border-radius: 0; }
+.brand-slide--landing .case-media img { border-radius: 0; }
+
+@media (max-width: 720px) {
+  .brand-slide { padding: 14px 14px 18px; border-radius: 20px; }
+  .brand-slide__panel { height: 160px; }
+  .brand-slide__panel img { width: 88px; height: 88px; }
+  .brand-swatches { grid-template-columns: repeat(3, 1fr); }
+  .brand-swatch { height: 150px; }
+}
+
+.persona__avatar { overflow: hidden; background: #E6E6EB; }
+.persona__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* About: work experience rows */
+.about-experience { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5) 0 var(--space-2); }
+.about-experience__heading {
+  margin: 0 0 var(--space-3);
+  text-align: center;
+  font-size: 32px;
+  font-weight: 500; letter-spacing: -0.5px; line-height: 56px;
+  color: var(--color-text);
+}
+.exp-row { display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-2); }
+.exp-card {
+  border-radius: var(--radius-tile);
+  background: var(--color-tile);
+  padding: var(--space-4);
+  transition: background 620ms var(--ease);
+}
+.exp-card:hover { background: var(--color-tile-hover); }
+.exp-card--company { display: flex; align-items: flex-start; gap: 16px; }
+.exp-logo {
+  flex: none; width: 44px; height: 44px; border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 18px; font-weight: 500; color: #fff;
+}
+.exp-logo--iask { background: linear-gradient(45deg, #7893f5, #9a4af5); }
+.exp-logo--dockyard { background: #e0a43a; }
+.exp-logo--ecc { background: #2f9e62; }
+.exp-company__name { margin: 0; font-size: 18px; font-weight: 500; line-height: 1.3; color: var(--color-text-black); }
+.exp-company__dates { margin: 4px 0 0; font-size: 17px; color: var(--color-muted); }
+.exp-role { margin: 0 0 var(--space-3); font-size: 18px; font-weight: 500; color: var(--color-text-black); }
+.exp-list { margin: 0; padding-left: 22px; display: grid; gap: 16px; }
+.exp-list li { font-size: 17px; line-height: 1.6; color: var(--color-text); }
+.exp-list li strong { font-weight: 500; color: var(--color-text-black); }
+@media (max-width: 900px) {
+  .exp-row { grid-template-columns: 1fr; }
+  .exp-card { padding: var(--space-3); }
+}
+
+/* ====== Split case layout (pilot: seo-article-generator.html) ======
+   Left: fixed intro column. Right: the story, scrolling. The page takes its
+   own background color; tune the variables below to try other palettes. */
+.case-page--split {
+  --case-bg: #EEEDF3;
+  --case-ink: #161C3C;
+  --case-accent: #5360DD;
+  --color-sparkle: var(--case-accent);
+  --color-tile: #F6F4FF;
+  --color-tile-hover: #EFECFD;
+  --color-media: #F6F4FF;
+  --color-desc: #4a4f6b;
+  --color-muted: #6f7392;
+  padding-top: 104px;
+}
+body.case-split { background-color: #EEEDF3; }
+body.case-split .nav-wrap { background: rgba(238, 237, 243, 0.8); }
+
+.case-page--split .split {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+  column-gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.split__side {
+  position: sticky;
+  top: 112px;
+  max-height: calc(100vh - 136px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding-bottom: var(--space-3);
+}
+.split__side::-webkit-scrollbar { display: none; }
+.split__side .case-crumb {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--case-ink); margin-bottom: var(--space-4);
+}
+.split__title {
+  margin: 0 0 var(--space-2);
+  font-size: clamp(2.6rem, 4.2vw, 3.8rem);
+  font-weight: 500; line-height: 1.02; letter-spacing: -0.03em;
+  color: var(--case-ink);
+}
+.split__role {
+  margin: 0 0 var(--space-3);
+  font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--case-accent);
+}
+.split__desc { margin: 0 0 var(--space-3); font-size: 17px; line-height: 1.6; color: var(--case-ink); max-width: 38ch; }
+.split__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-4); }
+.split__tag {
+  display: inline-flex; align-items: center; height: 32px; padding: 0 14px;
+  border-radius: 999px; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.split__tag--1 { background: var(--case-accent); color: #fff; }
+.split__tag--2 { background: #CBC1F7; color: var(--case-ink); }
+.split__tag--3 { background: #BFD3FB; color: var(--case-ink); }
+.split__meta { margin: 0; padding-top: var(--space-3); border-top: 1px solid rgba(22, 28, 60, 0.14); display: grid; gap: 14px; }
+.split__meta dt { font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 2px; }
+.split__meta dd { margin: 0; font-size: 15px; line-height: 1.45; color: var(--case-ink); }
+
+/* right column: full column width, no 720 reading cap */
+.split__main { min-width: 0; }
+.case-page--split .case-section { max-width: none; margin-top: var(--space-7); }
+.case-page--split .split__main > .rise-group:first-child .case-media { margin-top: 0; }
+.case-page--split .case-media--wide { width: 100%; margin-left: 0; }
+.case-page--split .case-section__heading { color: var(--case-ink); }
+.case-page--split .case-section p { max-width: 64ch; }
+.case-page--split .case-section p strong,
+.case-page--split .case-goal__text strong { color: var(--case-ink); }
+.case-page--split .case-footer { border-top-color: rgba(22, 28, 60, 0.14); }
+.case-page--split .case-tiles .tile--head,
+.case-page--split .case-tiles .tile--label { background: #DCD5F9; }
+.case-page--split .case-tiles .tile--head.tile--key { background: var(--case-ink); }
+
+/* dark chapter becomes a card inside the column, always dark */
+.case-page--split .dark-band {
+  margin-top: var(--space-7);
+  padding: var(--space-5) 0;
+  background: transparent;
+}
+.case-page--split [data-dark-section] { padding-top: var(--space-5); padding-bottom: var(--space-5); }
+.case-page--split .dark-band .case-section { margin-top: 0; }
+.case-page--split .dark-band .case-section__eyebrow { color: rgba(243, 244, 251, 0.7); }
+.case-page--split .dark-band .case-section__heading { color: #f3f4fb; }
+.case-page--split .dark-band .case-section > p { color: rgba(243, 244, 251, 0.75); }
+.case-page--split .dark-band .case-section > p strong { color: #fff; }
+
+/* tablet and phone: intro first, then the project, one column */
+@media (max-width: 1080px) {
+  .case-page--split .split { grid-template-columns: 1fr; }
+  .split__side { position: static; max-height: none; overflow: visible; }
+  .split__desc { max-width: 62ch; }
+  .case-page--split .case-section:first-of-type { margin-top: var(--space-6, 64px); }
+}
+@media (max-width: 720px) {
+  .case-page--split .dark-band { padding: var(--space-4) 0; }
+}
+
+/* persona: single column on narrow screens (v2 grid override came later than the 720px rule) */
+@media (max-width: 720px) {
+  .persona { grid-template-columns: minmax(0, 1fr); }
+  .persona__side { border-right: 0; border-bottom: 1px solid rgba(0,0,0,.08); }
+  .persona__side, .persona__main { padding: var(--space-3); min-width: 0; }
+}
+
+/* split pilot: glass plaques with a colored accent bar */
+.case-page--split .case-goal {
+  --bar: #5360DD; --lab: #4650C4;
+  max-width: none;
+  padding: var(--space-2) var(--space-3);
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-left: 4px solid var(--bar);
+  border-radius: 6px 16px 16px 6px;
+  box-shadow: 0 6px 24px rgba(83, 96, 221, 0.08);
+}
+.case-page--split .case-goal__label { color: var(--lab); }
+.case-page--split .case-goal__text { font-size: 17px; line-height: 1.5; color: var(--case-ink); }
+.case-page--split .case-goal__text strong { color: var(--case-ink); }
+.case-page--split .case-goal--goal { --bar: #5360DD; --lab: #4650C4; }
+.case-page--split .case-goal--problem { --bar: #F2703F; --lab: #C2481B; }
+.case-page--split .case-goal--finding { --bar: #1FB57A; --lab: #11865A; }
+.case-page--split .case-goal--solution { --bar: #F0B400; --lab: #8A6A00; }
+.case-page--split .case-section__heading { font-size: clamp(30px, 3.2vw, 40px); }
+.case-page--split .case-media--image { min-height: 0; }
+
+.case-page--split .split__main > .case-section:first-child { margin-top: 0; }
+.case-page--split .split__main > .rise-group:not(.case-section) .case-media { margin-top: var(--space-5); }
+.case-page--split .case-goal {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--bar) 14%, transparent), rgba(255, 255, 255, 0.5) 55%);
+}
+.case-page--split .case-goal__text { color: var(--color-desc); }
+.case-page--split .case-goal__text strong { font-weight: 600; }
+
+/* split pilot: persona labels in brand colors */
+.case-page--split .persona__label,
+.case-page--split .persona__eyebrow,
+.case-page--split .persona__flow-label { font-weight: 600; font-size: 13px; letter-spacing: 0.12em; }
+.case-page--split .persona__label { color: #5360DD; }
+.case-page--split .persona__flow-label { color: #8A5CF0; }
+.case-page--split .persona__flow .persona__list li::before { background: #B79CF7; }
+.case-page--split .persona__main .persona__block:nth-child(1) .persona__eyebrow { color: #E2582A; }
+.case-page--split .persona__main .persona__block:nth-child(1) .persona__list li::before { background: #F5A385; }
+.case-page--split .persona__main .persona__block:nth-child(2) .persona__eyebrow { color: #138F5E; }
+.case-page--split .persona__main .persona__block:nth-child(2) .persona__list li::before { background: #7ED3AE; }
+
+/* split pilot v2: palette-only colors, plain glass plaques (no gradient) */
+.case-page--split .case-goal {
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: none;
+}
+.case-page--split .case-goal--goal { --bar: #5360DD; --lab: #4650C4; }
+.case-page--split .case-goal--problem { --bar: #9167EB; --lab: #7248D6; }
+.case-page--split .case-goal--finding { --bar: #6FA0F8; --lab: #3F72D6; }
+.case-page--split .case-goal--solution { --bar: #2B3470; --lab: #2B3470; }
+
+.case-page--split .persona__label { color: #5360DD; }
+.case-page--split .persona__flow-label { color: #6F7392; }
+.case-page--split .persona__flow .persona__list li::before { background: #C4C4CC; }
+.case-page--split .persona__main .persona__block:nth-child(1) .persona__eyebrow { color: #7A55D8; }
+.case-page--split .persona__main .persona__block:nth-child(1) .persona__list li::before { background: #BDA6F2; }
+.case-page--split .persona__main .persona__block:nth-child(2) .persona__eyebrow { color: #4468D0; }
+.case-page--split .persona__main .persona__block:nth-child(2) .persona__list li::before { background: #A3B6F2; }
+.case-page--split .split__main > .rise-group:first-child .case-media { margin-top: 0; }
+.case-page--split .split__main > .case-section:first-child { margin-top: 0; }
+.case-page--split .split__main > .rise-group:first-child + .case-section { margin-top: var(--space-6, 64px); }
+.case-page--split .persona__flow-label { color: #2B3470; }
+.case-page--split .persona__flow .persona__list li::before { background: #9AA3D9; }
+
+/* split pilot: the whole page goes dark while the brand chapter is on screen */
+body.case-split { background-color: #EEEDF3; transition: background-color 700ms var(--ease); }
+.case-page--split .split__title,
+.case-page--split .split__role,
+.case-page--split .split__desc,
+.case-page--split .split__meta,
+.case-page--split .split__meta dt,
+.case-page--split .split__meta dd,
+.case-page--split .case-crumb,
+.case-page--split .case-section__heading,
+.case-page--split .case-footer__next { transition: color 700ms var(--ease), border-color 700ms var(--ease); }
+body.case-split.is-dark-bg { background-color: #18181E; }
+body.case-split.is-dark-bg .nav-wrap { background: rgba(24, 24, 30, 0.72); }
+body.case-split.is-dark-bg .pill-nav__item { color: #f3f4fb; }
+body.case-split.is-dark-bg .split__title { color: #f3f4fb; }
+body.case-split.is-dark-bg .split__role { color: #A9B2FF; }
+body.case-split.is-dark-bg .split__desc { color: rgba(243, 244, 251, 0.85); }
+body.case-split.is-dark-bg .split__meta { border-top-color: rgba(243, 244, 251, 0.16); }
+body.case-split.is-dark-bg .split__meta dt { color: rgba(243, 244, 251, 0.55); }
+body.case-split.is-dark-bg .split__meta dd { color: #f3f4fb; }
+body.case-split.is-dark-bg .split__side .case-crumb { color: rgba(243, 244, 251, 0.75); }
+body.case-split.is-dark-bg .case-footer__next { color: #fff; }
+body.case-split.is-dark-bg .split__tag--2 { background: rgba(203, 193, 247, 0.22); color: #E4DEFF; }
+body.case-split.is-dark-bg .split__tag--3 { background: rgba(191, 211, 251, 0.2); color: #D6E4FF; }
+
+/* ===== theme: iAsk brand (soft pink-lavender, brand purple) — iOS and Search cases ===== */
+.theme-iask .case-page--split {
+  --case-ink: #1E1B3F;
+  --case-accent: #5B45DB;
+  --color-tile: #FAF6FD;
+  --color-tile-hover: #F3ECFA;
+  --color-media: #FAF6FD;
+  --color-desc: #4b4868;
+  --color-muted: #75718f;
+}
+body.case-split.theme-iask:not(.is-dark-bg) {
+  background-color: #F5F5FF;
+}
+body.case-split.theme-iask .nav-wrap { background: rgba(245, 245, 255, 0.8); }
+.theme-iask .split__tag--2 { background: #EBCFE6; }
+.theme-iask .split__tag--3 { background: #D8D4FA; }
+.theme-iask .split__meta,
+.theme-iask .case-page--split .case-footer { border-color: rgba(30, 27, 63, 0.14); }
+.theme-iask .case-page--split .case-goal { box-shadow: none; }
+.theme-iask .case-page--split .case-goal--goal { --bar: #5B45DB; --lab: #4A35C4; }
+.theme-iask .case-page--split .case-goal--problem { --bar: #CE6A9F; --lab: #B24A82; }
+.theme-iask .case-page--split .case-goal--finding { --bar: #8F72EA; --lab: #6F52D0; }
+.theme-iask .case-page--split .case-goal--solution { --bar: #2A2260; --lab: #2A2260; }
+.theme-iask .case-page--split .case-media-grid .case-media--image { border-radius: 24px; }
+.case-page--split .case-result-stat__value,
+.case-page--split .case-footer__next { color: var(--case-ink); }
+.case-page--split .case-result-stat__label { color: var(--color-desc); }
+.case-page--split .case-result-group__label { color: var(--case-accent); }
+.case-page--split .case-result-group { background: rgba(255, 255, 255, 0.5); }
+.case-page--split .case-finding__index { color: var(--case-accent); }
+.case-page--split .case-media-grid .case-media--image { background: transparent; }
+@media (max-width: 1080px) {
+  .case-page--split .split__main > .case-section:first-child { margin-top: var(--space-6, 64px); }
+}
+
+/* before/after slider sits in a white card so its edges don't dissolve into the page */
+.case-page--split .case-compare-card {
+  margin-top: var(--space-5);
+  padding: var(--space-3);
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 1px 0 rgba(30, 27, 63, 0.04);
+}
+.case-page--split .case-compare-card .case-compare-intro { margin-top: 0; border-top: 0; padding: var(--space-1) var(--space-1) 0; }
+.case-page--split .case-compare-card .case-compare { margin-top: var(--space-2); border-radius: 18px; overflow: hidden; }
+@media (max-width: 720px) {
+  .case-page--split .case-compare-card { padding: var(--space-2); border-radius: 20px; }
+}
+
+/* ---------- Homepage v2 — square portrait + glass plaque + 3 projects ----------
+   Diana picked option D from the Figma layout exploration (2026-10-07):
+   a square photo that runs the full height of the viewport, the identity
+   (title, line, chips) on a frosted-glass plaque over its bottom edge, and
+   the three projects stacked on the right, each with its cover. Still one
+   screen, no page scroll: --hero-h is the same viewport budget the old
+   .hero-left/.hero-col used (100svh minus nav 112 and bottom padding 24). */
+.hero--photo { --hero-h: calc(100svh - 112px - 24px); }
+
+.hero-row--photo {
+  grid-template-columns: minmax(0, min(var(--hero-h), 62%)) minmax(0, 1fr);
+  height: var(--hero-h);
+}
+
+.tile--portrait {
+  height: var(--hero-h);
+  min-height: 0;
+}
+
+.tile--portrait .hero-photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-glass {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2;
+  padding: 24px 28px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.58);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  backdrop-filter: blur(24px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 10px 30px rgba(30, 30, 30, 0.10);
+}
+
+.hero-glass .hero__heading {
+  margin: 0 0 var(--space-1);
+  font-size: clamp(24px, calc(var(--hero-h) * 0.046), 38px);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+.hero-glass .hero__sub {
+  font-size: clamp(14px, calc(var(--hero-h) * 0.02), 17px);
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.hero-glass__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--space-2);
+}
+
+.hero-glass .about-chip { background: rgba(255, 255, 255, 0.85); }
+
+/* right — three project cards share the column height equally */
+.hero-col--projects { height: var(--hero-h); gap: var(--space-2); }
+
+.home-card {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+  transition: background 520ms var(--ease);
+}
+
+.home-card:hover { background: var(--color-tile-hover); }
+
+.home-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.home-card__text { min-width: 0; }
+
+.home-card__title {
+  display: block;
+  font-size: 22px;
+  line-height: 1.2;
+  letter-spacing: -0.6px;
+  color: var(--color-text);
+}
+
+.home-card__desc {
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--color-desc);
+  text-wrap: pretty;
+}
+
+.home-card .tile__arrow { width: 38px; height: 38px; }
+
+.home-card__media {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  border-radius: 20px;
+  background: var(--color-media);
+  overflow: hidden;
+}
+
+.home-card__media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.home-card__media--phone { background: #F0F0FF; }
+
+.home-card__media--phone img {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  width: 44%;
+  max-width: 220px;
+  height: auto;
+  transform: translateX(-50%);
+  transition: transform 620ms var(--ease);
+}
+
+.home-card:hover .home-card__media--phone img { transform: translateX(-50%) translateY(-6px); }
+
+@media (max-height: 800px) {
+  .home-card__desc { display: none; }
+  .home-card { padding: 20px; gap: 12px; }
+  .hero-glass { padding: 18px 22px; }
+  .hero-glass__chips { display: none; }
+}
+
+@media (max-width: 900px) {
+  .hero-row--photo { grid-template-columns: 1fr; height: auto; }
+  .tile--portrait { height: auto; aspect-ratio: 1; }
+  .hero-col--projects { height: auto; }
+  .home-card { flex: 0 0 auto; }
+  .home-card__media { flex: 0 0 auto; height: 220px; }
+  .home-card__desc { display: block; }
+  .hero-glass__chips { display: none; }
+  .hero-glass .hero__heading { font-size: 22px; }
+  .hero-glass .hero__sub { font-size: 13px; }
+  .hero-glass { left: 12px; right: 12px; bottom: 12px; padding: 16px 18px; }
+}
+.hero-glass .muted { color: #6a6a6e; }
+
+/* ---------- Homepage v3 — bento (Diana's own layout, 2026-10-08) ----------
+   Row 1: three squares — photo, Work (reel of project covers), Contact.
+   Row 2: who I am (half) + About (half). Still one screen on desktop:
+   --hero-h is the usual viewport budget; row 1 is a true square wherever
+   the window is tall enough (--sq = one third of the content width) and
+   otherwise caps at 56% of the height so row 2 keeps room to breathe. */
+.hero--bento { --hero-h: calc(100svh - 112px - 24px); }
+
+.bento {
+  --gap: var(--space-2);
+  --sq: calc((min(100vw - 2 * var(--side-padding), var(--content-width)) - 2 * var(--gap)) / 3);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  height: var(--hero-h);
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: min(var(--sq), 56%) minmax(0, 1fr);
+  gap: var(--gap);
+}
+
+.bento > .tile { min-height: 0; }
+.bento__photo { grid-column: span 2; }
+.bento__work { grid-column: span 2; }
+.bento__contact { grid-column: span 2; }
+.bento__id { grid-column: span 3; }
+.bento__about { grid-column: span 3; }
+
+.bento__photo .hero-photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bento__work,
+.bento__contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  color: inherit;
+  text-decoration: none;
+}
+
+.bento__work { transition: background 520ms var(--ease); }
+.bento__work:hover { background: var(--color-tile-hover); }
+
+.bento__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 42px;
+}
+
+.bento__head .tile__title { font-size: 28px; }
+
+/* reel: the three project covers cross-fade, one at a time */
+.bento__reel {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  border-radius: 20px;
+  background: var(--color-media);
+  overflow: hidden;
+}
+
+.bento__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: bento-reel 15s infinite;
+}
+
+.bento__slide--1 { animation-delay: 0s; }
+.bento__slide--2 { animation-delay: 5s; }
+.bento__slide--3 { animation-delay: 10s; background: var(--color-tile); transition: background 200ms ease; }
+.bento__work:hover .bento__slide--3 { background: var(--color-tile-hover); }
+
+.bento__slide video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bento__slide--3 video {
+  object-fit: cover;
+  object-position: center;
+  /* the clip zooms past the frame; dissolve into the tile instead of a hard crop */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+}
+
+@keyframes bento-reel {
+  0%   { opacity: 0; }
+  6%   { opacity: 1; }
+  30%  { opacity: 1; }
+  38%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento__slide { animation: none; }
+  .bento__slide--1 { opacity: 1; }
+}
+
+/* contact plaques */
+.bento__plaques {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.contact-mini {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: #fff;
+  color: var(--color-text);
+  text-decoration: none;
+  text-align: center;
+  transition: background 420ms var(--ease), transform 420ms var(--ease);
+}
+
+.contact-mini:hover { background: #FBFBFD; transform: translateY(-2px); }
+
+.contact-mini__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-sparkle);
+}
+
+.contact-mini__star { display: block; width: 14px; height: 14px; object-fit: contain; }
+
+.contact-mini__link {
+  font-size: clamp(14px, 1.25vw, 18px);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+/* identity tile */
+.bento__id {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.bento__id .hero__heading {
+  margin: 0;
+  font-size: clamp(22px, 2.4vw, 34px);
+  white-space: normal;
+  text-wrap: balance;
+}
+
+.bento__id .hero__sub { font-size: clamp(16px, 1.5vw, 21px); max-width: 34ch; }
+
+.bento__about { min-height: 0; justify-content: space-between; }
+
+@media (max-height: 800px) and (min-width: 901px) {
+  .bento__about .about-icon, .bento__about .about-support { display: none; }
+  .bento__about .about-tagline { font-size: clamp(18px, 1.5vw, 21px); }
+  .bento__id { padding: var(--space-3); }
+}
+
+/* tablet — two columns, same story order as phone but with pairs */
+@media (max-width: 900px) {
+  .hero--bento { padding-bottom: var(--space-4); }
+  .bento {
+    height: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+  }
+  .bento__photo { grid-column: 1; aspect-ratio: 1; }
+  .bento__work { grid-column: 2; aspect-ratio: 1; }
+  .bento__id { grid-column: 1 / -1; padding: var(--space-3); }
+  .bento__about { grid-column: 1 / -1; gap: var(--space-2); }
+  .bento__contact { grid-column: 1 / -1; }
+  .bento__plaques { flex-direction: row; }
+  .contact-mini { padding: 20px 12px; }
+}
+
+/* phone — one column. Order: photo, who I am, Work, About, Contact. */
+@media (max-width: 600px) {
+  .bento { grid-template-columns: 1fr; }
+  .bento__photo, .bento__work, .bento__id, .bento__about, .bento__contact { grid-column: 1; }
+  .bento__photo { order: 1; }
+  .bento__id { order: 2; }
+  .bento__work { order: 3; aspect-ratio: 4 / 3; }
+  .bento__about { order: 4; }
+  .bento__contact { order: 5; }
+  .bento__plaques { flex-direction: column; }
+  .contact-mini { padding: 18px 12px; }
+}
+@media (max-width: 900px) {
+  .bento__plaques { flex: 0 0 auto; }
+  .contact-mini { flex: 1 1 auto; min-height: 84px; }
+}
+@media (max-width: 900px) {
+  .bento__id { order: 1; }
+  .bento__about { order: 2; }
+  .bento__contact { order: 3; }
+}
+
+/* real company logos on About (replace the colored placeholder tiles) */
+.exp-logo { width: 56px; height: 56px; background: none; overflow: hidden; }
+.exp-logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.exp-logo--iask, .exp-logo--dockyard, .exp-logo--ecc { background: none; }
+.exp-logo--dockyard { border-radius: 50%; }
+.exp-logo--ecc { border-radius: 12px; }
+
+/* Spotlight: hover one tile on the homepage and every other tile fades back
+   (background, text and covers together), so the hovered one stands out.
+   Done with a page-colored veil per tile rather than opacity/filter, so it
+   doesn't fight the entrance animation's transition. The photo never fades.
+   Hover devices only. */
+.bento > .tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: var(--color-bg, #fff);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 450ms var(--ease);
+}
+
+@media (hover: hover) {
+  .bento:has(> :is(.bento__work, .bento__contact, .bento__about):hover) > .tile:not(:hover):not(.bento__photo):not(.bento__id)::after {
+    opacity: 0.62;
+  }
+}
+
+/* Prowler case — fourth tag + plain bullet list */
+.split__tag--4 { background: #CFE8DC; color: var(--case-ink); }
+.case-bullets { margin: var(--space-2) 0 var(--space-3); padding-left: 22px; display: grid; gap: 10px; }
+.case-bullets li { font-size: 16px; line-height: 1.55; color: var(--color-text); max-width: 56ch; }
+.case-bullets li::marker { color: var(--color-muted); }
+
+/* arrow after the contact links: tells people the link leaves the site */
+.contact-mini__link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.contact-mini__link svg { flex-shrink: 0; transition: transform 420ms var(--ease); }
+.contact-mini:hover .contact-mini__link svg { transform: translate(2px, -2px); }
+
+/* ---------- Prowler case — dark theme (#1C1C1C), Diana 2026-10-09 ---------- */
+body.case-split.theme-prowler { background-color: #1C1C1C; }
+body.case-split.theme-prowler .nav-wrap { background: rgba(28, 28, 28, 0.8); }
+.theme-prowler .pill-nav__item { color: #F4F4F2; }
+.theme-prowler .grain { opacity: 0.035; }
+
+.theme-prowler .case-page--split {
+  --case-bg: #1C1C1C;
+  --case-ink: #F4F4F2;
+  --case-accent: #DAC4FF;
+  --color-sparkle: var(--case-accent);
+  --color-tile: #262626;
+  --color-tile-hover: #2D2D2D;
+  --color-media: #242424;
+  --color-text: #F4F4F2;
+  --color-text-black: #F4F4F2;
+  --color-desc: rgba(244, 244, 242, 0.68);
+  --color-muted: rgba(244, 244, 242, 0.5);
+}
+
+.theme-prowler .split__tag--1 { background: var(--case-accent); color: #1C1C1C; }
+.theme-prowler .split__tag--2 { background: rgba(203, 193, 247, 0.2); color: #E4DEFF; }
+.theme-prowler .split__tag--3 { background: rgba(31, 181, 122, 0.2); color: #5EE0A8; }
+.theme-prowler .split__tag--4 { background: rgba(218, 196, 255, 0.14); color: #DAC4FF; }
+
+.theme-prowler .case-page--split .case-goal {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  border-left-color: var(--bar);
+  box-shadow: none;
+}
+.theme-prowler .case-page--split .case-goal--problem { --bar: #DAC4FF; --lab: #DAC4FF; }
+.theme-prowler .case-page--split .case-goal--finding { --bar: #1FB57A; --lab: #34D399; }
+.theme-prowler .case-page--split .case-goal__text { color: rgba(244, 244, 242, 0.85); }
+.theme-prowler .case-page--split .case-goal__text strong,
+.theme-prowler .case-page--split .case-section p strong { color: #fff; }
+
+.theme-prowler .case-finding p,
+.theme-prowler .case-bullets li { color: rgba(244, 244, 242, 0.88); }
+.theme-prowler .case-page--split .case-footer { border-top-color: rgba(255, 255, 255, 0.14); }
+.theme-prowler .case-media--placeholder { border: 1px dashed rgba(255, 255, 255, 0.14); }
+.theme-prowler .case-feature { border-top-color: rgba(255, 255, 255, 0.1); }
+
+/* ---------- About: story steps, neutral tile + colour floods in from the top-right corner on hover (Diana 2026-10-09) ---------- */
+.about-block--step {
+  --step-bg: #ECE6FF; --step-ink: #5B3FD0; --step-chip: rgba(91, 63, 208, 0.14);
+  min-height: 300px;
+  gap: 12px;
+  isolation: isolate;
+}
+.about-block--step-2 { --step-bg: #DDF3E7; --step-ink: #0F7A55; --step-chip: rgba(15, 122, 85, 0.14); }
+.about-block--step-3 { --step-bg: #FFE6D6; --step-ink: #B9441A; --step-chip: rgba(185, 68, 26, 0.14); }
+.about-block--step:hover { background: var(--color-tile); }
+.about-block--step::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--step-bg);
+  clip-path: circle(0 at 100% 0);
+  transition: clip-path 760ms var(--ease);
+}
+.about-block--step:hover::before,
+.about-block--step:focus-within::before { clip-path: circle(150% at 100% 0); }
+
+.about-block--step .about-block__eyebrow { padding-right: 56px; transition: color 500ms var(--ease); }
+.about-block--step:hover .about-block__eyebrow { color: var(--step-ink); }
+.about-block--step p.about-block__text { font-size: 16px; transition: color 500ms var(--ease); }
+.about-block--step:hover p.about-block__text { color: rgba(28, 28, 28, 0.78); }
+.about-block--step .step__num {
+  position: absolute; top: 22px; right: 24px;
+  font-size: 38px; font-weight: 500; line-height: 1; letter-spacing: -0.02em;
+  color: rgba(28, 28, 28, 0.14); pointer-events: none;
+  transition: color 500ms var(--ease);
+}
+.about-block--step:hover .step__num { color: var(--step-ink); opacity: 0.3; }
+.step__chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 8px; }
+.step__chips span {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+  padding: 6px 12px; border-radius: 999px;
+  background: rgba(28, 28, 28, 0.06); color: rgba(28, 28, 28, 0.6);
+  transition: background 500ms var(--ease), color 500ms var(--ease);
+}
+.about-block--step:hover .step__chips span { background: var(--step-chip); color: var(--step-ink); }
+.step__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: auto; padding-top: 8px; }
+.step__stats div { display: flex; flex-direction: column; gap: 4px; }
+.step__stats strong { font-size: 34px; font-weight: 500; line-height: 1; letter-spacing: -0.02em; color: var(--color-text-black); transition: color 500ms var(--ease); }
+.about-block--step:hover .step__stats strong { color: var(--step-ink); }
+.step__stats span { font-size: 13px; line-height: 1.35; color: var(--color-muted, rgba(28,28,28,.6)); }
+@media (max-width: 900px) { .about-block--step { min-height: 0; } }
+@media (prefers-reduced-motion: reduce) { .about-block--step::before { transition: none; } }
+
+/* ---------- About: "Outside of work" photo slider, Diana 2026-10-09 ---------- */
+.about-life { min-width: 0; display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-3) 0 var(--space-2); }
+.about-life__head > div:first-child { min-width: 0; }
+.about-life__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-2); }
+.about-life__heading { margin: 0; font-size: 32px; font-weight: 500; letter-spacing: -0.5px; line-height: 1.2; color: var(--color-text); }
+.about-life__sub { margin: 6px 0 0; font-size: 15px; line-height: 1.5; color: var(--color-desc); }
+.about-life__nav { display: flex; gap: 8px; flex-shrink: 0; }
+.life__btn {
+  width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--color-tile); color: var(--color-text-black);
+  transition: background 300ms var(--ease), opacity 300ms var(--ease), transform 300ms var(--ease);
+}
+.life__btn:hover { background: var(--color-tile-hover); transform: scale(1.06); }
+.life__btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+.life__track {
+  min-width: 0; display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -ms-overflow-style: none; outline-offset: 4px;
+  scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+  /* let the strip bleed to the page edge on the right */
+  margin-right: calc(-1 * var(--side-padding));
+  padding-right: var(--side-padding);
+}
+.life__track::-webkit-scrollbar { display: none; }
+.life__item { margin: 0; flex: 0 0 auto; scroll-snap-align: start; position: relative; }
+.life__item img {
+  display: block; height: 420px; width: auto; max-width: none;
+  border-radius: 24px; background: var(--color-tile);
+  user-select: none; -webkit-user-drag: none;
+}
+.life__item figcaption {
+  position: absolute; left: 12px; bottom: 12px;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.02em; color: #fff;
+  padding: 6px 12px; border-radius: 999px;
+  background: rgba(20, 20, 20, 0.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+@media (max-width: 900px) {
+  .about-life__heading { font-size: 26px; }
+  .life__item img { height: 320px; border-radius: 20px; }
+  .life__btn { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .life__track { scroll-behavior: auto; } }
+
+/* ---------- Case pull-quote plaque, Diana 2026-10-10 ---------- */
+.case-quote {
+  position: relative; margin: var(--space-3) 0 var(--space-2);
+  padding: var(--space-2) var(--space-3) var(--space-2) calc(var(--space-3) + 8px);
+  border-radius: 24px; overflow: hidden;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F1EEFF 100%);
+  border: 1px solid rgba(83, 96, 221, 0.18);
+  box-shadow: 0 10px 30px -18px rgba(83, 96, 221, 0.45);
+}
+.case-quote::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px;
+  background: linear-gradient(180deg, #7893F5, #9A4AF5);
+}
+.case-quote__mark {
+  position: absolute; right: 20px; top: -8px;
+  font-size: 90px; line-height: 1; font-weight: 600;
+  color: #5360DD; opacity: 0.14; pointer-events: none;
+}
+.case-quote blockquote {
+  margin: 0; position: relative; max-width: 56ch;
+  font-size: 17px; line-height: 1.5; font-weight: 500; letter-spacing: 0;
+  color: var(--color-text-black, #161C3C);
+}
+.case-quote figcaption {
+  margin-top: var(--space-2); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #5360DD;
+}
+@media (max-width: 900px) { .case-quote blockquote { font-size: 16px; } .case-quote__mark { font-size: 80px; } }
+
+/* ---------- Results cards: no overflow on laptop widths, 2026-10-10 ---------- */
+.case-results { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.case-result-group { min-width: 0; }
+@media (min-width: 901px) and (max-width: 1400px) {
+  .case-result-group { padding: var(--space-3); }
+  .case-result-stat { padding: 0 var(--space-2); }
+  .case-result-stat__value { font-size: clamp(1.6rem, 2.6vw, 2.25rem); }
+}
+@media (max-width: 900px) { .case-results { grid-template-columns: 1fr; } }
+
+
+/* Home About tile: keep the copy together instead of spreading it over the tile height */
+.bento__about { justify-content: flex-start; gap: var(--space-3); }
+.bento__about .about-tagline-row { align-items: flex-start; gap: 20px; }
+.bento__about .about-icon { width: 64px; height: 64px; }
+.bento__about .about-copy { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.bento__about .about-tagline { font-size: clamp(19px, 1.7vw, 24px); line-height: 1.3; color: var(--color-text); max-width: 40ch; }
+.bento__about .about-support { margin: 0; font-family: 'Red Hat Display', sans-serif; font-size: 16px; line-height: 1.45; color: var(--color-desc); max-width: 46ch; }
+.bento__about .about-chips { margin-top: auto; gap: 6px; }
+@media (max-width: 900px) {
+  .bento__about .about-icon { width: 48px; height: 48px; }
+  .bento__about .about-support { font-size: 15px; }
+}
+
+/* Hover zoom: Prowler cover on Work, portrait on Home */
+.work-card__media--screen img,
+.bento__photo .hero-photo-img {
+  transition: transform 1100ms var(--ease);
+  will-change: transform;
+}
+.work-card__media--screen img { transform-origin: 30% 30%; }
+.bento__photo .hero-photo-img { transform-origin: 50% 40%; }
+@media (hover: hover) {
+  .work-card:hover .work-card__media--screen img { transform: scale(1.07); }
+  .bento__photo:hover .hero-photo-img { transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-card__media--screen img,
+  .bento__photo .hero-photo-img { transition: none; }
+  .work-card:hover .work-card__media--screen img,
+  .bento__photo:hover .hero-photo-img { transform: none; }
+}
+
+/* Competitor table as cards on mobile: the purple label background from the split-case theme
+   leaked into the card title and drew a pill behind the name */
+@media (max-width: 720px) {
+  .case-page--split .case-tiles .tile--label { background: transparent; padding: 0 0 10px; }
+  .case-page--split .case-tiles tbody td.tile { background: transparent; }
+}
+
+/* Work cards on small screens: video and screen covers are absolutely positioned, so without a
+   ratio they collapse to an empty gap */
+@media (max-width: 900px) {
+  .work-card:not(.work-card--fixed) .work-card__media--video,
+  .work-card:not(.work-card--fixed) .work-card__media--screen { flex: 0 0 auto; aspect-ratio: 5 / 4; width: 100%; }
+}
+
+/* ---------- mobile menu (burger) ---------- */
+.nav-bar { display: none; }
+.nav-wrap { --nav-solid: #ffffff; --nav-ink: var(--color-text); }
+body.case-split .nav-wrap { --nav-solid: #EEEDF3; }
+body.case-split.theme-iask .nav-wrap { --nav-solid: #F5F5FF; }
+body.is-dark-bg .nav-wrap,
+body.case-split.is-dark-bg .nav-wrap { --nav-solid: #18181E; --nav-ink: #f3f4fb; }
+body.case-split.theme-prowler .nav-wrap { --nav-solid: #1C1C1C; --nav-ink: #F4F4F2; }
+
+@media (max-width: 720px) {
+  .nav-wrap { padding: 12px var(--side-padding) 8px; }
+  .nav-bar { display: flex; align-items: center; justify-content: space-between; height: 48px; color: var(--nav-ink); }
+  .nav-brand { display: inline-flex; align-items: center; gap: 8px; font-family: 'Red Hat Display', sans-serif; font-weight: 500; font-size: 17px; color: inherit; }
+  .nav-brand img { display: block; width: 24px; height: 24px; }
+  .nav-burger {
+    position: relative; width: 48px; height: 48px; margin-right: -12px; padding: 0;
+    border: 0; background: none; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .nav-burger__line {
+    position: absolute; left: 14px; right: 14px; height: 2px; border-radius: 2px; background: currentColor;
+    transition: transform 360ms var(--ease), top 360ms var(--ease);
+  }
+  .nav-burger__line:nth-child(1) { top: 19px; }
+  .nav-burger__line:nth-child(2) { top: 27px; }
+  .nav-wrap.is-open .nav-burger__line:nth-child(1) { top: 23px; transform: rotate(45deg); }
+  .nav-wrap.is-open .nav-burger__line:nth-child(2) { top: 23px; transform: rotate(-45deg); }
+
+  .nav-wrap.has-burger .pill-nav { display: none; padding: 0; }
+  .nav-wrap.is-open { bottom: 0; background: var(--nav-solid); backdrop-filter: none; -webkit-backdrop-filter: none; overflow-y: auto; }
+  .nav-wrap.is-open .pill-nav {
+    display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 0;
+    margin-top: var(--space-4);
+  }
+  .nav-wrap.is-open .pill-nav__item {
+    padding: 18px 0; font-size: 32px; letter-spacing: -0.01em; line-height: 1.1; gap: 12px;
+    border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+    opacity: 0; transform: translateY(8px); animation: navItemIn 460ms var(--ease) forwards;
+  }
+  .nav-wrap.is-open .pill-nav__item:last-child { border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent); }
+  .nav-wrap.is-open .pill-nav__item:nth-child(2) { animation-delay: 50ms; }
+  .nav-wrap.is-open .pill-nav__item:nth-child(3) { animation-delay: 100ms; }
+  .nav-wrap.is-open .pill-nav__item:nth-child(4) { animation-delay: 150ms; }
+  .nav-wrap.is-open .pill-nav__item:hover .pill-nav__label-inner { transform: none; }
+  .nav-wrap.is-open .pill-nav__icon-img { width: 28px; height: 28px; }
+  body.nav-open { overflow: hidden; }
+}
+@keyframes navItemIn { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .nav-burger__line { transition: none; }
+  .nav-wrap.is-open .pill-nav__item { animation: none; opacity: 1; transform: none; }
+}
+
+/* Home on phones: photo, who I am, Work, About, Contact (the tablet rules above reordered About before Work) */
+@media (max-width: 600px) {
+  .bento__photo { order: 1; }
+  .bento__id { order: 2; }
+  .bento__work { order: 3; }
+  .bento__about { order: 4; }
+  .bento__contact { order: 5; }
+}
+
+/* the per-theme translucent nav backgrounds are more specific than .nav-wrap.is-open: make the open menu solid everywhere */
+@media (max-width: 720px) {
+  body.nav-open .nav-wrap.is-open { background: var(--nav-solid); }
+}
+
+/* Work grid: the 750px "mosaic" card only fits on a wide desktop. Below that the two cards in a row split the width equally. */
+.work-card__arrow { flex-shrink: 0; }
+@media (min-width: 901px) and (max-width: 1399px) {
+  .work-card--fixed { flex: 1 1 0%; width: auto; }
+  .work-card--fill { flex: 1 1 0%; }
+  .work-card { padding: var(--space-3); gap: 20px; }
+}
+
+/* Contact page on phones: sit a bit above the vertical centre */
+@media (max-width: 720px) {
+  .contact-page { align-items: flex-start; padding-top: max(120px, 17svh); }
+}
