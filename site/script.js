@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const bar = document.createElement('div');
   bar.className = 'nav-bar';
   bar.innerHTML =
-    '<a class="nav-brand" href="index.html"><img src="assets/menu-star.png?v=2" alt="" width="24" height="24"><span>Diana Tiart</span></a>' +
+    '<a class="nav-brand" href="index.html"><img src="assets/menu-star.png?v=3" alt="" width="24" height="24"><span>Diana Tiart</span></a>' +
     '<button type="button" class="nav-burger" aria-expanded="false" aria-controls="' + nav.id + '" aria-label="Open menu">' +
     '<span class="nav-burger__line"></span><span class="nav-burger__line"></span></button>';
   wrap.insertBefore(bar, nav);

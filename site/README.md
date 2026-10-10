@@ -26,3 +26,6 @@ Every push to `main` redeploys.
 
 ## Not in this folder
 Old versions, unlinked pages and unused assets live one level up in `_archive/`. Source images and recordings are in `_source/`.
+
+## Caching
+`vercel.json` tells browsers to cache `/assets/*`, `styles.css` and `script.js` for a year. That is why the `?v=N` bump matters: if you change a file and keep the same `?v=N`, visitors keep seeing the old one.
