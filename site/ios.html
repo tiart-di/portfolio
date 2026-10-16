@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iOS App — Diana Tiart</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="iOS App — Diana Tiart">
+  <meta property="og:description" content="Taking iAsk native on iOS in two phases — a lean V1 to prove it belonged on mobile, then a V2 designed around Apple's own subscription rules.">
+  <meta name="description" content="Taking iAsk native on iOS in two phases — a lean V1 to prove it belonged on mobile, then a V2 designed around Apple's own subscription rules.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css?v=202">
+</head>
+<body class="case-split theme-iask">
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav-wrap">
+    <nav class="pill-nav">
+      <a href="/" class="pill-nav__item">
+        <span class="pill-nav__icon" aria-hidden="true"><img class="pill-nav__icon-img" src="assets/menu-star.png?v=3" alt="" width="24" height="24"></span>
+        <span class="pill-nav__label"><span class="pill-nav__label-inner">Home</span><span class="pill-nav__label-inner" aria-hidden="true">Home</span></span>
+      </a>
+      <a href="/work" class="pill-nav__item is-active">
+        <span class="pill-nav__icon" aria-hidden="true"><img class="pill-nav__icon-img" src="assets/menu-star.png?v=3" alt="" width="24" height="24"></span>
+        <span class="pill-nav__label"><span class="pill-nav__label-inner">Work</span><span class="pill-nav__label-inner" aria-hidden="true">Work</span></span>
+      </a>
+      <a href="/about" class="pill-nav__item">
+        <span class="pill-nav__icon" aria-hidden="true"><img class="pill-nav__icon-img" src="assets/menu-star.png?v=3" alt="" width="24" height="24"></span>
+        <span class="pill-nav__label"><span class="pill-nav__label-inner">About</span><span class="pill-nav__label-inner" aria-hidden="true">About</span></span>
+      </a>
+      <a href="/contact" class="pill-nav__item">
+        <span class="pill-nav__icon" aria-hidden="true"><img class="pill-nav__icon-img" src="assets/menu-star.png?v=3" alt="" width="24" height="24"></span>
+        <span class="pill-nav__label"><span class="pill-nav__label-inner">Contact</span><span class="pill-nav__label-inner" aria-hidden="true">Contact</span></span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="case-page case-page--split">
+
+      <div class="split">
+        <aside class="split__side rise-group is-page-hero">
+          <a class="case-crumb rise" style="--d:80ms" href="/work">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Other case studies
+          </a>
+          <h1 class="split__title rise" style="--d:140ms">iOS App</h1>
+          <p class="split__role rise" style="--d:180ms">Solo product designer</p>
+          <p class="split__desc rise" style="--d:220ms">The iAsk iOS app, shipped in two phases: V1 with core search only, then V2 with search history, settings and a Pro subscription.</p>
+          <div class="split__tags rise" style="--d:260ms">
+            <span class="split__tag split__tag--1">Product Design</span>
+            <span class="split__tag split__tag--2">iAsk AI</span>
+            <span class="split__tag split__tag--3">Cross-platform</span>
+          </div>
+          <dl class="split__meta rise" style="--d:300ms">
+            <div><dt>Timeline</dt><dd>~8 weeks (V1)</dd></div>
+            <div><dt>Tools</dt><dd>Figma, Claude, Google Analytics, Maze</dd></div>
+          </dl>
+        </aside>
+
+        <div class="split__main">
+
+        <div class="case-section rise-group is-page-hero" id="context">
+          <span class="case-section__eyebrow rise" style="--d:60ms">Context</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">Why iAsk needed a mobile app</h2>
+          <div class="case-goal case-goal--problem rise" style="--d:120ms">
+            <span class="case-goal__label">Problem</span>
+            <p class="case-goal__text">Mobile web didn't feel native or fast enough, and competitors were already in the App Store.</p>
+          </div>
+                    <p class="rise" style="--d:140ms">iAsk had a mature web product, but mobile web didn't feel native, fast, or focused enough for something people would reach for often. Search through a browser tab is a worse experience than an app that opens straight into it. At the same time, competitors already had a presence in the App Store. Leadership decided iOS needed to happen; the call came from the CEO, and the project landed on my desk as the sole designer on it.</p>
+        </div>
+
+        <div class="case-feature case-section rise-group" id="search-bar">
+          <span class="case-section__eyebrow rise" style="--d:60ms">V1: Adapting to iOS</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">Moving the search bar to the bottom of the screen</h2>
+          <p class="rise" style="--d:140ms">The web version puts the search input in the middle of the screen. On iOS, I moved it to the bottom, closer to where a thumb naturally rests, cutting the reach needed for what would be a frequent, repeated action rather than a one-off. Small decision, but it's the difference between an app that feels native and one that feels like the website wrapped in a shell.</p>
+          <p class="rise" style="--d:180ms">Getting through Apple's own review process was its own real constraint, down to specifics like exact preview-screenshot sizes required for every device the listing needed to support. None of it is design work in the usual sense, but all of it had to be planned for before V1 could ship at all.</p>
+          <div class="case-media-grid rise" style="--d:220ms">
+            <div class="case-media case-media--image">
+              <img src="assets/ios-v1-input-flow.jpg?v=2" alt="V1 search input flow — empty home screen, typing a question, and the Find in sources filter with Everywhere, Academic, Forums, and Wiki options">
+            </div>
+            <div class="case-media case-media--image">
+              <img src="assets/ios-v1-answer-flow.jpg?v=2" alt="V1 answer flow — question submitted, loading state, and the full answer with share and copy options">
+            </div>
+          </div>
+        </div>
+
+        <div class="case-section rise-group" id="scoping">
+          <span class="case-section__eyebrow rise" style="--d:60ms">Scope of V1 and V2</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">What V2 added after V1</h2>
+          <div class="case-goal case-goal--finding rise" style="--d:120ms">
+            <span class="case-goal__label">Decision</span>
+            <p class="case-goal__text">V1 shipped with one thing, the core search. V2 added the rest once that held up.</p>
+          </div>
+                    <p class="rise" style="--d:140ms">Rather than porting every web feature to iOS at once, V1 shipped with exactly one thing: the core search experience. No login, no subscription, no history. Just the fastest way to find out whether people actually wanted iAsk as a native app before investing in everything else. V2 followed once that held up, adding sign-up and login, search history, settings, follow-up search, and the Pro subscription.</p>
+          <div class="case-media-grid rise" style="--d:180ms">
+            <div class="case-media case-media--image">
+              <img src="assets/ios-v2-home-annotated.jpg?v=2" alt="Home V2, annotated — user settings and Get Pro button added up top, visual search and voice input made more prominent, the Go button removed, and Search/History navigation at the bottom">
+            </div>
+            <div class="case-media case-media--image">
+              <img src="assets/ios-v2-answer-annotated.jpg?v=2" alt="Answer screen V2, annotated — the question bar hides while reading and reappears on tap or pull-down, key actions pinned to the top, and the follow-up input always within reach">
+            </div>
+          </div>
+        </div>
+
+        <div class="case-feature case-section rise-group" id="subscription">
+          <span class="case-section__eyebrow rise" style="--d:60ms">V2: Subscription</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">Designing a subscription screen without in-app purchase</h2>
+          <div class="case-goal case-goal--solution rise" style="--d:120ms">
+            <span class="case-goal__label">Constraint</span>
+            <p class="case-goal__text">No purchase inside the app. Buying meant leaving iAsk for the web, and some people wouldn't come back.</p>
+          </div>
+                    <p class="rise" style="--d:140ms">By the time V2 added the Pro subscription, one constraint was already decided above me: no purchase inside the app. Apple takes a cut of in-app purchases, and the business chose to avoid it, so buying a subscription meant leaving iAsk entirely. That's a real risk: send someone to a browser mid-decision, and there's a good chance they don't come back.</p>
+          <div class="case-findings rise" style="--d:180ms">
+            <div class="case-finding">
+              <span class="case-finding__index">01</span>
+              <p>A value screen before the handoff: what the person would get, shown before they were sent anywhere, so the redirect had a reason attached to it instead of reading as a dead end.</p>
+            </div>
+            <div class="case-finding">
+              <span class="case-finding__index">02</span>
+              <p>The redirect itself, out to the web for the actual payment. This was the one piece of the flow I didn't choose: it was decided above me, for cost reasons.</p>
+            </div>
+            <div class="case-finding">
+              <span class="case-finding__index">03</span>
+              <p>A deep link back into the app after payment, landing on a subscription that was already active. That closes the loop instead of leaving it to guesswork.</p>
+            </div>
+          </div>
+        </div>
+
+  
+        <div class="case-section rise-group" id="outcome">
+          <span class="case-section__eyebrow rise" style="--d:60ms">Outcome</span>
+          <h2 class="case-section__heading rise" style="--d:100ms">Results</h2>
+          <div class="case-goal case-goal--goal rise" style="--d:120ms">
+            <span class="case-goal__label">Result</span>
+            <p class="case-goal__text">10K+ downloads in the first 90 days, mostly existing web users moving to the app, not new people finding iAsk.</p>
+          </div>
+                    <p class="rise" style="--d:140ms">V2 turned iAsk iOS into something people opened again: search history, settings and an active subscription gave people a reason to come back instead of using it once and reverting to the browser. The growth side is more mixed, and worth stating plainly: the goal was a new acquisition channel, and the app did cross 10,000 downloads in its first 90 days, but most of that was existing web users moving to a native option rather than people finding iAsk for the first time. The goal was broader than what happened. It is a more honest result than dressing it up as pure growth, and still a real one.</p>
+        </div>
+
+        <div class="case-results rise-group" id="results">
+          <div class="case-result-group rise" style="--d:60ms">
+            <span class="case-result-group__label">During the V1 build</span>
+            <div class="case-result-group__stats case-result-group__stats--single">
+              <div class="case-result-stat">
+                <span class="case-result-stat__value">8&nbsp;weeks</span>
+                <span class="case-result-stat__label">V1 build, core search only</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-result-group rise" style="--d:120ms">
+            <span class="case-result-group__label">After the V2 launch</span>
+            <div class="case-result-group__stats">
+              <div class="case-result-stat">
+                <span class="case-result-stat__value">10K+</span>
+                <span class="case-result-stat__label">Downloads in the first 90 days</span>
+              </div>
+              <div class="case-result-stat">
+                <span class="case-result-stat__value">6</span>
+                <span class="case-result-stat__label">Features shipped in V2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-footer rise-group">
+          <a class="case-footer__next rise" style="--d:60ms" href="/seo">
+            Next: SEO Article Generator
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js?v=24"></script>
+</body>
+</html>

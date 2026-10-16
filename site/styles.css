@@ -3502,3 +3502,21 @@ body.case-split.theme-prowler .nav-wrap { --nav-solid: #1C1C1C; --nav-ink: #F4F4
 @media (max-width: 720px) {
   .contact-page { align-items: flex-start; padding-top: max(120px, 17svh); }
 }
+
+/* in-app browsers (Telegram, Instagram, LinkedIn) can anchor a fixed element
+   below their own top bar while the page still scrolls underneath it, so text
+   showed through the gap above the nav. Extend the nav backdrop upward past the
+   viewport edge; in a normal browser this part is off-screen and invisible. */
+.nav-wrap::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 320px;
+  background: inherit;
+  -webkit-backdrop-filter: inherit;
+  backdrop-filter: inherit;
+  pointer-events: none;
+  transition: background-color 700ms var(--ease);
+}

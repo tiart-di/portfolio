@@ -5,14 +5,14 @@ Static site: plain HTML, CSS, JS. No build step.
 ## Pages
 - `index.html` home (bento grid)
 - `work.html` project list
-- `iask-search.html`, `iask-ios.html`, `seo-article-generator.html`, `prowler.html` case studies (order: Search, iOS, SEO, Prowler)
+- `search.html`, `ios.html`, `seo.html`, `prowler.html` case studies (order: Search, iOS, SEO, Prowler)
 - `about.html`, `contact.html`
 - `styles.css`, `script.js` shared by every page; `assets/` images and video
 
 ## Run locally
-    cd site
-    python3 -m http.server 8000
-    # open http://localhost:8000
+    npx serve site
+    # clean URLs (/work, /about) only work on a server that supports them (Vercel, npx serve),
+    # plain `python3 -m http.server` will 404 on them
 
 ## Deploy
 Push to GitHub, import the repo in Vercel (framework: Other, no build command, output directory: root).
@@ -29,3 +29,6 @@ Old versions, unlinked pages and unused assets live one level up in `_archive/`.
 
 ## Caching
 `vercel.json` tells browsers to cache `/assets/*`, `styles.css` and `script.js` for a year. That is why the `?v=N` bump matters: if you change a file and keep the same `?v=N`, visitors keep seeing the old one.
+
+## URLs
+`vercel.json` has `cleanUrls: true`, so pages live at `/`, `/work`, `/about`, `/contact`, `/search`, `/ios`, `/seo`, `/prowler`. Old `.html` links and the old long names (`/iask-search`, `/iask-ios`, `/seo-article-generator`) redirect automatically. Internal links in the html use these clean paths (`href="/work"`), not file names.
